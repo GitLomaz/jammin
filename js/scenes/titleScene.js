@@ -8,15 +8,18 @@ let titleScene = new Phaser.Class({
 
   preload: function () {
     this.load.image('ball', 'images/ball.png');
+    this.load.image('leaf1', 'images/leaf1.png');
+    this.load.image('leaf2', 'images/leaf2.png');
+    this.load.image('leaf3', 'images/leaf3.png');
 
-    this.input.on(
-      'pointerdown',
-      (pointer, objectsClicked) => {   
-        console.log(objectsClicked);
-        this.matter.add.gameObject(new Leaf(500, 200));
-        this.add.sprite(300, 300, 'rectangle');
-      }
-    );
+    // this.input.on(
+    //   'pointerdown',
+    //   (pointer, objectsClicked) => {   
+    //     console.log(objectsClicked);
+    //     this.matter.add.gameObject(new Leaf(500, 200));
+    //     this.add.sprite(300, 300, 'rectangle');
+    //   }
+    // );
 
   },
 
@@ -25,10 +28,15 @@ let titleScene = new Phaser.Class({
     
     this.matter.world.setBounds(
       0, 0, GAME_WIDTH, GAME_HEIGHT,
-      32,  // thickness of the walls
+      128,  // thickness of the walls
       true, true, true, true // left, right, top, bottom enabled
     );
-    new Leaf(200, 200);
+
+    for (let i = 0; i < 10; i++) {
+      new Leaf(Random.between(100, 900), Random.between(100, 600));
+      
+    }
+
     new Ball(200, 150);
 
     // new Phaser.Geom.Rectangle(1024, 720, 0, 0, 0xffffff);
@@ -36,12 +44,12 @@ let titleScene = new Phaser.Class({
     console.log(this.cameras.main.width, this.cameras.main.height);
     console.log(PLAY_AREA_WIDTH, PLAY_AREA_HEIGHT);
 
-    let matterBlock = this.matter.add.sprite(100, 100, 'rectangle');
-    let sceneBlock = this.add.sprite(300, 100, 'rectangle');
-    let sceneCircle = this.add.sprite(600, 100, 'cirlce');
+    // let matterBlock = this.matter.add.sprite(100, 100, 'rectangle');
+    // let sceneBlock = this.add.sprite(300, 100, 'rectangle');
+    // let sceneCircle = this.add.sprite(600, 100, 'cirlce');
 
 
-    let matterLeaf = this.matter.add.gameObject(new Leaf(200, 200));
+    // let matterLeaf = this.matter.add.gameObject(new Leaf(200, 200));
     // let sceneLeaf = this.addToScene(new Leaf(300, 200));
 
     this.add
@@ -81,7 +89,7 @@ let titleScene = new Phaser.Class({
 
     // drawBoundaries(this);
 
-    this.scene.pause();
+    // this.scene.pause();
 
   },
 

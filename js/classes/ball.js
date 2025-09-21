@@ -18,8 +18,14 @@ class Ball extends Entity {
 
     // Speed-up on collision
     this.sprite.setOnCollide(() => {
-      let vx = this.sprite.body.velocity.x * 1.1;
-      let vy = this.sprite.body.velocity.y * 1.1;
+      let vx = this.sprite.body.velocity.x * 1.01;
+      let vy = this.sprite.body.velocity.y * 1.01;
+
+      console.log(vx)
+
+      const maxSpeed = 20;
+      vx = Phaser.Math.Clamp(vx, -maxSpeed, maxSpeed);
+      vy = Phaser.Math.Clamp(vy, -maxSpeed, maxSpeed);
       this.sprite.setVelocity(vx, vy);
     });
   }
