@@ -2,7 +2,7 @@ class Block extends Entity {
   constructor(x, y) {
     super(x, y);
     this.health = 3;
-    this.score= 100;
+    this.score = 100;
   }
 
   die() {
