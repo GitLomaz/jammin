@@ -87,7 +87,7 @@ let titleScene = new Phaser.Class({
     .setName("green2")
     .setInteractive();
 
-    // drawBoundaries(this);
+    drawBoundaries(this);
 
     // this.scene.pause();
 
