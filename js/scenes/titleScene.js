@@ -10,6 +10,8 @@ let titleScene = new Phaser.Class({
   },
 
   create: function () {
+    scene = this;
+    new Leaf(200, 200);
   },
 
   update: function (time) {

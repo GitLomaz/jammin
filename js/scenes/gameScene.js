@@ -10,6 +10,7 @@ let gameScene = new Phaser.Class({
   },
 
   create: function () {
+    scene = this;
   },
 
   update: function (time) {

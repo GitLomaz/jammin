@@ -1,0 +1,18 @@
+class Block extends Entity {
+  constructor(x, y) {
+    super(x, y);
+    this.health = 3;
+    this.score= 100;
+  }
+
+  die() {
+    // score increase
+  }
+
+  hit() {
+    this.health -= 1;
+    if (this.health <= 0) {
+      this.die();
+    }
+  }
+}

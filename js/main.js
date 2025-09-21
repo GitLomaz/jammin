@@ -4,4 +4,12 @@ let config = {
   height: GAME_HEIGHT,
   parent: "wrapper",
   scene: [titleScene, gameScene],
+    physics: {
+    default: 'matter',
+    matter: {
+      debug: true
+    }
+  },
 };
+
+new Phaser.Game(config);
