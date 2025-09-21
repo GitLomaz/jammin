@@ -53,6 +53,7 @@ const verts = this.shape.map(([x, y]) => ({ x, y }));
     this.body = scene.matter.add.fromVertices(x, y, verts, {
       restitution: 0,
       friction: 0,
+      isStatic: true
     });
 
     // Optional: draw outline for debugging
