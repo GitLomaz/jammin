@@ -5,11 +5,11 @@ let config = {
   parent: "wrapper",
   scene: [titleScene, gameScene],
     physics: {
-    default: 'matter',
-    matter: {
-      debug: true
-    }
-  },
+      default: 'matter',
+      matter: {
+        debug: true
+      }
+    },
 };
 
 new Phaser.Game(config);
