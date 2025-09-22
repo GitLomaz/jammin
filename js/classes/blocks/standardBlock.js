@@ -16,8 +16,17 @@ class StandardBlock extends Block {
   }
 
   die() {
-    this.sprite.destroy();
-    this.destroy();
+    // shrink to nothing
+    scene.tweens.add({
+      targets: this.sprite,
+      scaleX: 0,
+      scaleY: 0,
+      duration: 100,
+      onComplete: () => {
+        this.sprite.destroy();
+        scene.blocks.remove(this);
+      }
+    });
   }
 
   hit() {
