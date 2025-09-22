@@ -12,16 +12,6 @@ let titleScene = new Phaser.Class({
     this.load.image('leaf2', 'images/leaf2.png');
     this.load.image('leaf3', 'images/leaf3.png');
     this.load.image('block', 'images/block.png');
-
-    // this.input.on(
-    //   'pointerdown',
-    //   (pointer, objectsClicked) => {   
-    //     console.log(objectsClicked);
-    //     this.matter.add.gameObject(new Leaf(500, 200));
-    //     this.add.sprite(300, 300, 'rectangle');
-    //   }
-    // );
-
   },
 
   create: function () {
@@ -85,24 +75,6 @@ function drawBoundaries() {
   // Right boundary
   scene.matter.add.rectangle(GAME_WIDTH - borderWidth / 2, GAME_HEIGHT / 2, borderWidth, GAME_HEIGHT, options);
 
-  // Bottom sidebar boundary (from play area width → game width, at bottom)
-  scene.matter.add.rectangle(
-    (PLAY_AREA_WIDTH + GAME_WIDTH) / 2,
-    GAME_HEIGHT - borderWidth / 2,
-    GAME_WIDTH - PLAY_AREA_WIDTH,
-    borderWidth,
-    options
-  );
-
-  // Separator boundary (vertical line between play area and sidebar)
-  scene.matter.add.rectangle(
-    PLAY_AREA_WIDTH,
-    GAME_HEIGHT / 2,
-    borderWidth,
-    GAME_HEIGHT,
-    options
-  );
-
   // === Optional: still draw lines for visuals ===
   const g = scene.add.graphics();
   g.lineStyle(borderWidth, borderColor);
@@ -118,14 +90,6 @@ function drawBoundaries() {
   // right
   g.moveTo(GAME_WIDTH - borderWidth / 2, 0);
   g.lineTo(GAME_WIDTH - borderWidth / 2, GAME_HEIGHT);
-
-  // bottom sidebar
-  g.moveTo(PLAY_AREA_WIDTH, GAME_HEIGHT - borderWidth / 2);
-  g.lineTo(GAME_WIDTH, GAME_HEIGHT - borderWidth / 2);
-
-  // separator
-  g.moveTo(PLAY_AREA_WIDTH, 0);
-  g.lineTo(PLAY_AREA_WIDTH, GAME_HEIGHT);
 
   g.strokePath();
   g.setScrollFactor(0);
