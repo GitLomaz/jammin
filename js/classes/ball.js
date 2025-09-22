@@ -8,6 +8,7 @@ class Ball extends Entity {
     this.sprite = scene.matter.add.image(x, y, 'ball');
     this.sprite.setDisplaySize(this.radius * 2, this.radius * 2);
     this.sprite.setCircle(this.radius);
+    this.sprite.body.label = "ball";
 
     // physics settings
     this.sprite.setBounce(1);           // full energy on bounce

@@ -3,6 +3,7 @@ class Block extends Entity {
     super(x, y);
     this.health = 3;
     this.score = 100;
+    scene.blocks.add(this);
   }
 
   die() {

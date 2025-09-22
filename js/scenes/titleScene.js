@@ -11,6 +11,7 @@ let titleScene = new Phaser.Class({
     this.load.image('leaf1', 'images/leaf1.png');
     this.load.image('leaf2', 'images/leaf2.png');
     this.load.image('leaf3', 'images/leaf3.png');
+    this.load.image('block', 'images/block.png');
 
     // this.input.on(
     //   'pointerdown',
@@ -25,74 +26,41 @@ let titleScene = new Phaser.Class({
 
   create: function () {
     scene = this;
-
-    this.platform = new Platform(this, 516, 700, undefined);
     
+    // Remove this once we get bottom.. kinda doing stuff
     this.matter.world.setBounds(
       0, 0, GAME_WIDTH, GAME_HEIGHT,
       128,  // thickness of the walls
       true, true, true, true // left, right, top, bottom enabled
     );
 
-    for (let i = 0; i < 10; i++) {
-      new Leaf(Random.between(100, 900), Random.between(100, 600));
-      
+    this.blocks = this.add.group();
+
+    // Example of Add blocks
+    for (let i = 0; i < 14; i++) {
+      for (let j = 0; j < 7; j++) {
+        new StandardBlock(120 + i * 60, 90 + j * 40, 0);
+      }
     }
 
-    this.ball = new Ball(200, 150);
+    this.platform = new Platform(this, 516, 700, undefined);
+    this.ball = new Ball(500, 450);
+    drawBoundaries();
 
-    // new Phaser.Geom.Rectangle(1024, 720, 0, 0, 0xffffff);
+     this.matter.world.on('collisionstart', (event) => {
+      event.pairs.forEach(pair => {
+        const { bodyA, bodyB } = pair;
+        const labels = [bodyA.label, bodyB.label];
+        console.log(labels);
+        if (labels.includes('ball') && labels.includes('block')) {
+          let blockBody = labels[0] === 'block' ? bodyA : bodyB;     
+          console.log(blockBody)
+          if (!blockBody || !blockBody.gameObject) {return}
+          blockBody.gameObject.hit();
 
-    console.log(this.cameras.main.width, this.cameras.main.height);
-    console.log(PLAY_AREA_WIDTH, PLAY_AREA_HEIGHT);
-
-    // let matterBlock = this.matter.add.sprite(100, 100, 'rectangle');
-    // let sceneBlock = this.add.sprite(300, 100, 'rectangle');
-    // let sceneCircle = this.add.sprite(600, 100, 'cirlce');
-
-
-    // let matterLeaf = this.matter.add.gameObject(new Leaf(200, 200));
-    // let sceneLeaf = this.addToScene(new Leaf(300, 200));
-
-    this.add
-    .rectangle(25, 12.5, 50, 25, 0x0000ff)
-    .setName("blue1")
-    .setInteractive();
-
-    this.add
-    .rectangle(650, 200, 50, 25, 0x0000ff)
-    .setName("blue2")
-    .setInteractive();
-
-    this.add
-    .rectangle(700, 200, 50, 25, 0xff0000)
-    .setName("red1")
-    .setInteractive();
-
-    this.add
-    .rectangle(750, 200, 50, 25, 0x1bf913)
-    .setName("green1")
-    .setInteractive();
-
-    this.add
-    .rectangle(800, 200, 50, 25, 0x0000ff)
-    .setName("blue3")
-    .setInteractive();
-
-    this.add
-    .rectangle(850, 200, 50, 25, 0xff0000)
-    .setName("red2")
-    .setInteractive();
-
-    this.add
-    .rectangle(900, 200, 50, 25, 0x1bf913)
-    .setName("green2")
-    .setInteractive();
-
-    drawBoundaries(this);
-
-    // this.scene.pause();
-
+        }
+      });
+    });
   },
 
   update: function (time) {
@@ -101,7 +69,7 @@ let titleScene = new Phaser.Class({
   },
 });
 
-function drawBoundaries(scene) {
+function drawBoundaries() {
   const borderWidth = 10;
   const borderColor = 0x717171;
 
