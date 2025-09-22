@@ -56,13 +56,10 @@ let titleScene = new Phaser.Class({
       event.pairs.forEach(pair => {
         const { bodyA, bodyB } = pair;
         const labels = [bodyA.label, bodyB.label];
-        console.log(labels);
         if (labels.includes('ball') && labels.includes('block')) {
           let blockBody = labels[0] === 'block' ? bodyA : bodyB;     
-          console.log(blockBody)
           if (!blockBody || !blockBody.gameObject) {return}
           blockBody.gameObject.hit();
-
         }
       });
     });
