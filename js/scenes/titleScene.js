@@ -13,6 +13,8 @@ let titleScene = new Phaser.Class({
     this.load.image('leaf3', 'images/leaf3.png');
     this.load.image('block', 'images/block.png');
 
+    this.load.json('testData', 'images/test.json');
+
     // this.input.on(
     //   'pointerdown',
     //   (pointer, objectsClicked) => {   
@@ -26,7 +28,8 @@ let titleScene = new Phaser.Class({
 
   create: function () {
     scene = this;
-    
+    jsonData = this.cache.json.get('testData').layers[0].data;
+
     // Remove this once we get bottom.. kinda doing stuff
     this.matter.world.setBounds(
       0, 0, GAME_WIDTH, GAME_HEIGHT,
@@ -36,15 +39,17 @@ let titleScene = new Phaser.Class({
 
     this.blocks = this.add.group();
 
-    // Example of Add blocks
-    for (let i = 0; i < 14; i++) {
-      for (let j = 0; j < 7; j++) {
-        new StandardBlock(120 + i * 60, 90 + j * 40, 0);
+    // Loading JSON from Tiled object
+    for (let i = 0; i < 12; i++) {
+      for (let j = 0; j < 16; j++) {
+        let block = jsonData.shift();
+        if (block === 0) continue;
+        new StandardBlock(64 + j * 60, 70 + i * 40, 0);
       }
     }
 
     this.platform = new Platform(this, 516, 700, undefined);
-    this.ball = new Ball(500, 450);
+    this.ball = new Ball(500, 650);
     drawBoundaries();
 
      this.matter.world.on('collisionstart', (event) => {
