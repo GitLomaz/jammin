@@ -11,7 +11,7 @@ let titleScene = new Phaser.Class({
     this.load.image('leaf1', 'images/leaf1.png');
     this.load.image('leaf2', 'images/leaf2.png');
     this.load.image('leaf3', 'images/leaf3.png');
-    this.load.image('block', 'images/block.png');
+    this.load.spritesheet('block', 'images/block.png', { frameWidth: 53, frameHeight: 30 });
 
     this.load.json('testData', 'images/test.json');
 
@@ -44,7 +44,8 @@ let titleScene = new Phaser.Class({
       for (let j = 0; j < 16; j++) {
         let block = jsonData.shift();
         if (block === 0) continue;
-        new StandardBlock(64 + j * 60, 70 + i * 40, 0);
+        console.log(block - 1)
+        new StandardBlock(64 + j * 60, 70 + i * 40, block - 1);
       }
     }
 
@@ -63,7 +64,7 @@ let titleScene = new Phaser.Class({
         }
       });
     });
-  },
+  },  
 
   update: function (time) {
     this.platform.update();

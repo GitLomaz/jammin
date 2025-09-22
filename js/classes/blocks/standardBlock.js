@@ -1,11 +1,13 @@
 class StandardBlock extends Block {
-  constructor(x, y) {
+  constructor(x, y, frame = 0) {
     super(x, y);
 
     this.health = 1;
     this.score = 50;
 
-    this.sprite = scene.matter.add.image(x, y, 'block', null, {
+    console.log(frame)
+
+    this.sprite = scene.matter.add.sprite(x, y, 'block', frame, {
       isStatic: true,
       restitution: 0,
       friction: 0,
