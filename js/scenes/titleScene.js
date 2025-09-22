@@ -25,6 +25,8 @@ let titleScene = new Phaser.Class({
 
   create: function () {
     scene = this;
+
+    this.platform = new Platform(this, 516, 700, undefined);
     
     this.matter.world.setBounds(
       0, 0, GAME_WIDTH, GAME_HEIGHT,
@@ -94,6 +96,7 @@ let titleScene = new Phaser.Class({
   },
 
   update: function (time) {
+    this.platform.update();
   },
 });
 
