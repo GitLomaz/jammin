@@ -3,41 +3,46 @@ class Ball extends Entity {
     super(x, y);
 
     this.radius = 10;
+    this.speed = 6; // fixed speed
 
     this.sprite = scene.matter.add.image(x, y, 'ball');
     this.sprite.setDisplaySize(this.radius * 2, this.radius * 2);
     this.sprite.setCircle(this.radius);
 
-    // Physics properties
-    this.sprite.setBounce(1);
-    this.sprite.setFriction(0, 0, 0);
-    this.sprite.setFrictionAir(0);
+    // physics settings
+    this.sprite.setBounce(1);           // full energy on bounce
+    this.sprite.setFriction(0, 0, 0);   // no surface friction
+    this.sprite.setFrictionAir(0);      // no air drag
+    this.sprite.setIgnoreGravity(true); // just in case
 
-    // Initial velocity
-    this.sprite.setVelocity(Phaser.Math.Between(-5, 5), -5);
+    // give initial push
+    this.setVelocity(Phaser.Math.Between(-this.speed, this.speed), -this.speed);
+  }
 
-    // // Speed-up on collision
-    // this.sprite.setOnCollide(() => {
-    //   let vx = this.sprite.body.velocity.x;
-    //   let vy = this.sprite.body.velocity.y;
+  setVelocity(vx, vy) {
+    this.sprite.setVelocity(vx, vy);
+  }
 
-    //   // Current speed (magnitude)
-    //   let speed = Math.sqrt(vx * vx + vy * vy);
-    //   console.log(speed)
+  update() {
+    const body = this.sprite.body;
+    if (!body) return;
+    this.sprite.rotation = 0; // prevent rotation
+    let vx = body.velocity.x;
+    let vy = body.velocity.y;
+    let currentSpeed = Math.sqrt(vx * vx + vy * vy);
 
-    //   // Increase speed by 1%
-    //   speed *= 1.01;
+    if (currentSpeed === 0) {
+      // restart if it ever gets stuck
+      this.setVelocity(this.speed, -this.speed);
+      return;
+    }
 
-    //   // Clamp
-    //   const maxSpeed = 20;
-    //   speed = Phaser.Math.Clamp(speed, 0, maxSpeed);
+    // avoid perfect vertical or horizontal (ball can “lock” bouncing up/down)
+    if (Math.abs(vx) < 0.01) vx = 0.1 * Math.sign(vx || 1);
+    if (Math.abs(vy) < 0.01) vy = 0.1 * Math.sign(vy || 1);
 
-    //   // Normalize direction
-    //   let len = Math.sqrt(vx * vx + vy * vy) || 1;
-    //   vx = (vx / len) * speed;
-    //   vy = (vy / len) * speed;
-
-    //   this.sprite.setVelocity(vx, vy);
-    // });
+    // normalize back to constant speed
+    const scale = this.speed / Math.sqrt(vx * vx + vy * vy);
+    this.setVelocity(vx * scale, vy * scale);
   }
 }

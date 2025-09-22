@@ -39,7 +39,7 @@ let titleScene = new Phaser.Class({
       
     }
 
-    new Ball(200, 150);
+    this.ball = new Ball(200, 150);
 
     // new Phaser.Geom.Rectangle(1024, 720, 0, 0, 0xffffff);
 
@@ -97,6 +97,7 @@ let titleScene = new Phaser.Class({
 
   update: function (time) {
     this.platform.update();
+    this.ball.update();
   },
 });
 
@@ -104,45 +105,60 @@ function drawBoundaries(scene) {
   const borderWidth = 10;
   const borderColor = 0x717171;
 
+  // === Matter walls ===
+  const options = { isStatic: true, restitution: 1, friction: 0, frictionStatic: 0, frictionAir: 0 };
+
   // Top boundary
-  scene.topCanvasBoundary = scene.add.graphics();
-  scene.topCanvasBoundary.lineStyle(borderWidth, borderColor);
-  scene.topCanvasBoundary.moveTo(0, 0 + (borderWidth / 2));
-  // scene.topCanvasBoundary.lineTo(PLAY_AREA_WIDTH + (borderWidth / 2), 0 + (borderWidth / 2)); // Top
-  scene.topCanvasBoundary.lineTo(GAME_WIDTH + (borderWidth / 2), 0 + (borderWidth / 2)); // Top
-  scene.topCanvasBoundary.strokePath(0, 0);
-  scene.topCanvasBoundary.setScrollFactor(0);
+  scene.matter.add.rectangle(GAME_WIDTH / 2, borderWidth / 2, GAME_WIDTH, borderWidth, options);
 
   // Left boundary
-  scene.leftCanvasBoundary = scene.add.graphics();
-  scene.leftCanvasBoundary.lineStyle(borderWidth, borderColor);
-  scene.leftCanvasBoundary.moveTo(0 + (borderWidth / 2), PLAY_AREA_HEIGHT);
-  scene.leftCanvasBoundary.lineTo(0 + (borderWidth / 2), 0 + (borderWidth / 2));
-  scene.leftCanvasBoundary.strokePath(0, 0);
-  scene.leftCanvasBoundary.setScrollFactor(0);
+  scene.matter.add.rectangle(borderWidth / 2, GAME_HEIGHT / 2, borderWidth, GAME_HEIGHT, options);
 
   // Right boundary
-  scene.rightCanvasBoundary = scene.add.graphics();
-  scene.rightCanvasBoundary.lineStyle(borderWidth, borderColor);
-  scene.rightCanvasBoundary.moveTo(GAME_WIDTH - (borderWidth / 2), 0 + (borderWidth / 2));
-  scene.rightCanvasBoundary.lineTo(GAME_WIDTH - (borderWidth / 2), GAME_HEIGHT + (borderWidth / 2)); // Top
-  scene.rightCanvasBoundary.strokePath(0, 0);
-  scene.rightCanvasBoundary.setScrollFactor(0);
+  scene.matter.add.rectangle(GAME_WIDTH - borderWidth / 2, GAME_HEIGHT / 2, borderWidth, GAME_HEIGHT, options);
 
-  // Score sidebar bottom
-  scene.bottomSidebarBoundary = scene.add.graphics();
-  scene.bottomSidebarBoundary.lineStyle(borderWidth, borderColor);
-  scene.bottomSidebarBoundary.moveTo(PLAY_AREA_WIDTH - (borderWidth / 2), GAME_HEIGHT - (borderWidth / 2));
-  scene.bottomSidebarBoundary.lineTo(GAME_WIDTH - (borderWidth / 2), GAME_HEIGHT - (borderWidth / 2)); // Top
-  scene.bottomSidebarBoundary.strokePath(0, 0);
-  scene.bottomSidebarBoundary.setScrollFactor(0);
+  // Bottom sidebar boundary (from play area width → game width, at bottom)
+  scene.matter.add.rectangle(
+    (PLAY_AREA_WIDTH + GAME_WIDTH) / 2,
+    GAME_HEIGHT - borderWidth / 2,
+    GAME_WIDTH - PLAY_AREA_WIDTH,
+    borderWidth,
+    options
+  );
 
+  // Separator boundary (vertical line between play area and sidebar)
+  scene.matter.add.rectangle(
+    PLAY_AREA_WIDTH,
+    GAME_HEIGHT / 2,
+    borderWidth,
+    GAME_HEIGHT,
+    options
+  );
 
-  // One-fifth boundary (separator between game area and score sidebar)
-  scene.separatorBoundary = scene.add.graphics();
-  scene.separatorBoundary.lineStyle(borderWidth, borderColor);
-  scene.separatorBoundary.moveTo(PLAY_AREA_WIDTH, 0 + (borderWidth / 2));
-  scene.separatorBoundary.lineTo(PLAY_AREA_WIDTH, PLAY_AREA_HEIGHT + (borderWidth / 2)); // Top
-  scene.separatorBoundary.strokePath(0, 0);
-  scene.separatorBoundary.setScrollFactor(0);
+  // === Optional: still draw lines for visuals ===
+  const g = scene.add.graphics();
+  g.lineStyle(borderWidth, borderColor);
+
+  // top
+  g.moveTo(0, borderWidth / 2);
+  g.lineTo(GAME_WIDTH, borderWidth / 2);
+
+  // left
+  g.moveTo(borderWidth / 2, 0);
+  g.lineTo(borderWidth / 2, GAME_HEIGHT);
+
+  // right
+  g.moveTo(GAME_WIDTH - borderWidth / 2, 0);
+  g.lineTo(GAME_WIDTH - borderWidth / 2, GAME_HEIGHT);
+
+  // bottom sidebar
+  g.moveTo(PLAY_AREA_WIDTH, GAME_HEIGHT - borderWidth / 2);
+  g.lineTo(GAME_WIDTH, GAME_HEIGHT - borderWidth / 2);
+
+  // separator
+  g.moveTo(PLAY_AREA_WIDTH, 0);
+  g.lineTo(PLAY_AREA_WIDTH, GAME_HEIGHT);
+
+  g.strokePath();
+  g.setScrollFactor(0);
 }
