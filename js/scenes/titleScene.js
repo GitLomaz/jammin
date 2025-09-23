@@ -11,6 +11,9 @@ let titleScene = new Phaser.Class({
     this.load.image('leaf1', 'images/leaf1.png');
     this.load.image('leaf2', 'images/leaf2.png');
     this.load.image('leaf3', 'images/leaf3.png');
+    this.load.image('paddleLeft', 'images/paddleLeft.png');
+    this.load.image('paddleMiddle', 'images/paddleMiddle.png');
+    this.load.image('paddleRight', 'images/paddleRight.png');
     this.load.spritesheet('block', 'images/block.png', { frameWidth: 53, frameHeight: 30 });
 
     this.load.json('testData', 'images/test.json');
@@ -35,12 +38,11 @@ let titleScene = new Phaser.Class({
       for (let j = 0; j < 16; j++) {
         let block = jsonData.shift();
         if (block === 0) continue;
-        console.log(block - 1)
         new StandardBlock(64 + j * 60, 70 + i * 40, block - 1);
       }
     }
 
-    this.platform = new Platform(this, GAME_WIDTH / 2, GAME_HEIGHT - 20, undefined);
+    this.paddle = new Paddle(GAME_WIDTH / 2, GAME_HEIGHT - 20);
     this.ball = new Ball(GAME_WIDTH / 2, (GAME_HEIGHT - 20) - 15);
     drawBoundaries();
 
@@ -48,30 +50,6 @@ let titleScene = new Phaser.Class({
       event.pairs.forEach((pair) => {
         const { bodyA, bodyB } = pair;
         const labels = [bodyA.label, bodyB.label];
-        console.log('labels', labels);
-
-        // Platform collisions
-        if (labels.includes('platform')) {
-          // Ball into Platform collision
-          if (labels.includes('ball')) {
-            const platform = labels[0] === 'platform' ? bodyA : bodyB;
-            const ball = labels[0] === 'ball' ? bodyA : bodyB;
-
-            const ballImpactX = ball.position.x;
-            const platformImpactX = platform.position.x;
-            const platformWidth = platform.gameObject.width;
-
-            // NEGATIVE values means the ball hit the paddle on the LEFT side from the center
-            // POSITIVE values means the ball hit the paddle on the RIGHT side from the center
-            // The value ranges from [-(platformWidth / 2), +(platformWidth / 2)]
-            const hitOffset = Math.floor(ballImpactX - platformImpactX);
-            console.log('hitOffset', hitOffset);
-
-            // TODO: Add logic to bounce the ball at an higher and higher angle depending on how far from the
-            // center of the platform it was hit. Test also increasing velocity a bit by the same token.
-          }
-        }
-
         if (labels.includes('ball') && labels.includes('block')) {
           let blockBody = labels[0] === 'block' ? bodyA : bodyB;     
           if (!blockBody || !blockBody.gameObject) {return}
@@ -82,7 +60,7 @@ let titleScene = new Phaser.Class({
   },  
 
   update: function (time) {
-    this.platform.update();
+    this.paddle.update();
     this.ball.update();
   },
 });
