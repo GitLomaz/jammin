@@ -15,15 +15,6 @@ let titleScene = new Phaser.Class({
 
     this.load.json('testData', 'images/test.json');
 
-    // this.input.on(
-    //   'pointerdown',
-    //   (pointer, objectsClicked) => {   
-    //     console.log(objectsClicked);
-    //     this.matter.add.gameObject(new Leaf(500, 200));
-    //     this.add.sprite(300, 300, 'rectangle');
-    //   }
-    // );
-
   },
 
   create: function () {
@@ -49,14 +40,38 @@ let titleScene = new Phaser.Class({
       }
     }
 
-    this.platform = new Platform(this, 516, 700, undefined);
-    this.ball = new Ball(500, 650);
+    this.platform = new Platform(this, GAME_WIDTH / 2, GAME_HEIGHT - 20, undefined);
+    this.ball = new Ball(GAME_WIDTH / 2, (GAME_HEIGHT - 20) - 15);
     drawBoundaries();
 
-     this.matter.world.on('collisionstart', (event) => {
-      event.pairs.forEach(pair => {
+    this.matter.world.on('collisionstart', (event) => {
+      event.pairs.forEach((pair) => {
         const { bodyA, bodyB } = pair;
         const labels = [bodyA.label, bodyB.label];
+        console.log('labels', labels);
+
+        // Platform collisions
+        if (labels.includes('platform')) {
+          // Ball into Platform collision
+          if (labels.includes('ball')) {
+            const platform = labels[0] === 'platform' ? bodyA : bodyB;
+            const ball = labels[0] === 'ball' ? bodyA : bodyB;
+
+            const ballImpactX = ball.position.x;
+            const platformImpactX = platform.position.x;
+            const platformWidth = platform.gameObject.width;
+
+            // NEGATIVE values means the ball hit the paddle on the LEFT side from the center
+            // POSITIVE values means the ball hit the paddle on the RIGHT side from the center
+            // The value ranges from [-(platformWidth / 2), +(platformWidth / 2)]
+            const hitOffset = Math.floor(ballImpactX - platformImpactX);
+            console.log('hitOffset', hitOffset);
+
+            // TODO: Add logic to bounce the ball at an higher and higher angle depending on how far from the
+            // center of the platform it was hit. Test also increasing velocity a bit by the same token.
+          }
+        }
+
         if (labels.includes('ball') && labels.includes('block')) {
           let blockBody = labels[0] === 'block' ? bodyA : bodyB;     
           if (!blockBody || !blockBody.gameObject) {return}
@@ -77,16 +92,16 @@ function drawBoundaries() {
   const borderColor = 0x717171;
 
   // === Matter walls ===
-  const options = { isStatic: true, restitution: 1, friction: 0, frictionStatic: 0, frictionAir: 0 };
+  const options = { isStatic: true, isSensor: false, restitution: 1, friction: 0, frictionStatic: 0, frictionAir: 0 };
 
   // Top boundary
-  scene.matter.add.rectangle(GAME_WIDTH / 2, borderWidth / 2, GAME_WIDTH, borderWidth, options);
+  scene.matter.add.rectangle(GAME_WIDTH / 2, borderWidth / 2, GAME_WIDTH, borderWidth, { ...options, label: 'top_wall' });
 
   // Left boundary
-  scene.matter.add.rectangle(borderWidth / 2, GAME_HEIGHT / 2, borderWidth, GAME_HEIGHT, options);
+  scene.matter.add.rectangle(borderWidth / 2, GAME_HEIGHT / 2, borderWidth, GAME_HEIGHT, { ...options, label: 'left_wall' });
 
   // Right boundary
-  scene.matter.add.rectangle(GAME_WIDTH - borderWidth / 2, GAME_HEIGHT / 2, borderWidth, GAME_HEIGHT, options);
+  scene.matter.add.rectangle(GAME_WIDTH - borderWidth / 2, GAME_HEIGHT / 2, borderWidth, GAME_HEIGHT, { ...options, label: 'right_wall' });
 
   // === Optional: still draw lines for visuals ===
   const g = scene.add.graphics();
