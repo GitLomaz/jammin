@@ -1,8 +1,6 @@
 class Paddle extends Entity {
   constructor(x, y) {
     super(x, y);
-
-    // Add sprite parts
     this.leftSprite = scene.add.image(-50, 0, "paddleLeft");
     this.add(this.leftSprite);
     this.middleSprite = scene.add.image(0, 0, "paddleMiddle");
