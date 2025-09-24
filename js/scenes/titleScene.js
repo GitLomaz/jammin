@@ -60,7 +60,6 @@ let titleScene = new Phaser.Class({
     this.paddle.update();
     this.balls.children.each((ball) => ball.update());
     this.portals.children.each((portal) => portal.update());
-    // iterate this.blocks to see if there is any left with breakable = true
     let anyBreakableLeft = false;
     this.blocks.children.each((block) => {
       if (block.breakable) {
