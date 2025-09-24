@@ -54,6 +54,17 @@ let titleScene = new Phaser.Class({
   update: function (time) {
     this.paddle.update();
     this.balls.children.each((ball) => ball.update());
+    // iterate this.blocks to see if there is any left with breakable = true
+    let anyBreakableLeft = false;
+    this.blocks.children.each((block) => {
+      if (block.breakable) {
+        anyBreakableLeft = true;
+      }
+    });
+
+    if (!anyBreakableLeft) {
+      console.log('level complete!');
+    }
   },
 });
 

@@ -45,9 +45,9 @@ class Ball extends Entity {
       angle = 1.9;
     } else if (angle < -1.832 && angle > -1.9) {
       angle = -1.9;
-    } else if (angle > -0.314 && angle < 0.314) {
+    } else if (angle > -0 && angle < 0.314) {
       angle = 0.314;
-    } else if (angle < -0.314 && angle > -0.314) {
+    } else if (angle < -0.314 && angle > 0) {
       angle = -0.314;
     }
 
