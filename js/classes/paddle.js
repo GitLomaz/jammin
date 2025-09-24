@@ -14,6 +14,8 @@ class Paddle extends Entity {
     this.width = 150;
     this.height = 50;
 
+    this.balls = [];
+
     this.body = scene.matter.add.rectangle(x, y + 20, this.width, this.height, {
       chamfer: { radius: 30 },
       restitution: 0,

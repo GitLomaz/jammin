@@ -14,6 +14,9 @@ let titleScene = new Phaser.Class({
     this.load.image('paddleLeft', 'images/paddleLeft.png');
     this.load.image('paddleMiddle', 'images/paddleMiddle.png');
     this.load.image('paddleRight', 'images/paddleRight.png');
+    this.load.image('iron', 'images/iron.png');
+    this.load.image('ironLeft', 'images/ironLeft.png');
+    this.load.image('ironRight', 'images/ironRight.png');
     this.load.spritesheet('blocks', 'images/blocks.png', { frameWidth: 53, frameHeight: 30 });
     this.load.json('level', 'js/data/' +  currentLevel[0] + '_' + currentLevel[1] + '.json');
 
@@ -69,39 +72,59 @@ let titleScene = new Phaser.Class({
 });
 
 function drawBoundaries() {
-  const borderWidth = 10;
+  const borderWidth = 30;
   const borderColor = 0x717171;
 
   // === Matter walls ===
   const options = { isStatic: true, isSensor: false, restitution: 1, friction: 0, frictionStatic: 0, frictionAir: 0 };
 
   // Top boundary
-  scene.matter.add.rectangle(GAME_WIDTH / 2, borderWidth / 2, GAME_WIDTH, borderWidth, { ...options, label: 'top_wall' });
+  scene.matter.add.rectangle(
+    GAME_WIDTH / 2,
+    borderWidth / 2,
+    GAME_WIDTH,
+    borderWidth,
+    { ...options, label: 'top_wall' }
+  );
+  scene.add.tileSprite(
+    GAME_WIDTH / 2,
+    borderWidth / 2,
+    GAME_WIDTH + 46,
+    borderWidth,
+    'iron'
+  );
 
   // Left boundary
-  scene.matter.add.rectangle(borderWidth / 2, GAME_HEIGHT / 2, borderWidth, GAME_HEIGHT, { ...options, label: 'left_wall' });
+  scene.matter.add.rectangle(
+    borderWidth / 2,
+    GAME_HEIGHT / 2,
+    borderWidth,
+    GAME_HEIGHT,
+    { ...options, label: 'left_wall' }
+  );
+  scene.add.tileSprite(
+    borderWidth / 2,
+    GAME_HEIGHT / 2,
+    borderWidth,
+    GAME_HEIGHT,
+    'ironLeft'
+  );
 
   // Right boundary
-  scene.matter.add.rectangle(GAME_WIDTH - borderWidth / 2, GAME_HEIGHT / 2, borderWidth, GAME_HEIGHT, { ...options, label: 'right_wall' });
-
-  // === Optional: still draw lines for visuals ===
-  const g = scene.add.graphics();
-  g.lineStyle(borderWidth, borderColor);
-
-  // top
-  g.moveTo(0, borderWidth / 2);
-  g.lineTo(GAME_WIDTH, borderWidth / 2);
-
-  // left
-  g.moveTo(borderWidth / 2, 0);
-  g.lineTo(borderWidth / 2, GAME_HEIGHT);
-
-  // right
-  g.moveTo(GAME_WIDTH - borderWidth / 2, 0);
-  g.lineTo(GAME_WIDTH - borderWidth / 2, GAME_HEIGHT);
-
-  g.strokePath();
-  g.setScrollFactor(0);
+  scene.matter.add.rectangle(
+    GAME_WIDTH - borderWidth / 2,
+    GAME_HEIGHT / 2,
+    borderWidth,
+    GAME_HEIGHT,
+    { ...options, label: 'right_wall' }
+  );
+  scene.add.tileSprite(
+    GAME_WIDTH - borderWidth / 2,
+    GAME_HEIGHT / 2,
+    borderWidth,
+    GAME_HEIGHT,
+    'ironRight'
+  );
 }
 
 function generateLevel(jsonData) {
