@@ -15,13 +15,13 @@ let titleScene = new Phaser.Class({
     this.load.image('paddleMiddle', 'images/paddleMiddle.png');
     this.load.image('paddleRight', 'images/paddleRight.png');
     this.load.spritesheet('blocks', 'images/blocks.png', { frameWidth: 53, frameHeight: 30 });
-    this.load.json('testData', 'js/data/1_1.json');
+    this.load.json('level', 'js/data/' +  currentLevel[0] + '_' + currentLevel[1] + '.json');
 
   },
 
   create: function () {
     scene = this;
-    jsonData = this.cache.json.get('testData');
+    jsonData = this.cache.json.get('level');
     this.blocks = this.add.group();
     this.balls = this.add.group();
 
