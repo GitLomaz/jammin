@@ -42,23 +42,17 @@ class Ball extends Entity {
     }
 
     let angle = Math.atan2(vy, vx); // radians
-    let deg = Phaser.Math.RadToDeg(angle);
+    console.log(angle)
 
-    // normalize manually
-    deg = this.normalizeDegrees(deg);
-
-    // clamp away from horizontal (0°, 180°) and vertical (90°, -90°)
-    const minAngle = 15;
-    if (Math.abs(deg % 180) < minAngle) {
-      deg = minAngle * Math.sign(deg || 1);
-    } else if (Math.abs((Math.abs(deg) - 90) % 180) < minAngle) {
-      deg = (90 + minAngle) * Math.sign(deg || 1);
+    if (angle > 1.832 && angle < 1.9) {
+      console.log("clamp")
+      angle = 1.9;
+    } else if (angle < -1.832 && angle > -1.9) {
+      console.log("clamp")
+      angle = -1.9;
     }
 
-    // back to radians
-    angle = Phaser.Math.DegToRad(deg);
 
-    // set velocity with fixed magnitude
     vx = Math.cos(angle) * this.speed;
     vy = Math.sin(angle) * this.speed;
     this.setVelocity(vx, vy);

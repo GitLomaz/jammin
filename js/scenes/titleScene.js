@@ -119,6 +119,9 @@ function generateLevel(jsonData) {
         case 7:
           new CrumbleBlock(xMargin + j * xSpacing, yMargin + i * ySpacing, block - 4);
           break;
+        case 8:
+          new IronBlock(xMargin + j * xSpacing, yMargin + i * ySpacing);
+          break;
       }
     }
   }
