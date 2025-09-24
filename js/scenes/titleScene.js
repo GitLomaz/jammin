@@ -7,6 +7,8 @@ let titleScene = new Phaser.Class({
   },
 
   preload: function () {
+    console.log('preloading')
+    console.log(currentLevel)
     this.load.image('ball', 'images/ball.png');
     this.load.image('leaf1', 'images/leaf1.png');
     this.load.image('leaf2', 'images/leaf2.png');
@@ -19,13 +21,12 @@ let titleScene = new Phaser.Class({
     this.load.image('ironRight', 'images/ironRight.png');
     this.load.image('portal', 'images/portal.png');
     this.load.spritesheet('blocks', 'images/blocks.png', { frameWidth: 53, frameHeight: 30 });
-    this.load.json('level', 'js/data/' +  currentLevel[0] + '_' + currentLevel[1] + '.json');
-
+    this.load.json('level' + JSON.stringify(currentLevel), 'js/data/' +  currentLevel[0] + '_' + currentLevel[1] + '.json');
   },
 
   create: function () {
     scene = this;
-    jsonData = this.cache.json.get('level');
+    jsonData = this.cache.json.get('level' + JSON.stringify(currentLevel));
     this.blocks = this.add.group();
     this.balls = this.add.group();
     this.portals = this.add.group();
@@ -154,6 +155,7 @@ function generateLevel(jsonData) {
         case 2:
         case 3:
         case 4:
+          console.log('adding bricks!')
           new StandardBlock(xMargin + j * xSpacing, yMargin + i * ySpacing, block - 1);
           break;
         case 5:

@@ -31,6 +31,19 @@ class Paddle extends Entity {
       let targetX = Phaser.Math.Clamp(pointer.x, halfWidth, GAME_WIDTH - halfWidth);
       scene.matter.body.setPosition(this.body, { x: targetX, y: y + 20 });
       this.setPosition(this.body.position.x, this.body.position.y);
+      this.checkPortals();
     });
+  }
+
+  checkPortals() {
+    if (scene.portals.getChildren().length === 0) {return}
+    if (this.body.bounds.min.x < 30) {
+      currentLevel[0]++;
+      scene.scene.restart();
+    } else if (this.body.bounds.max.x > GAME_WIDTH - 30) {
+      currentLevel[0]++;
+      currentLevel[1]++;
+      scene.scene.restart();
+    }
   }
 }
