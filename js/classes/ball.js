@@ -18,6 +18,7 @@ class Ball extends Entity {
 
     // give initial push
     this.setVelocity(Phaser.Math.Between(-this.speed, this.speed), -this.speed);
+    scene.balls.add(this);
   }
 
   setVelocity(vx, vy) {
@@ -68,5 +69,12 @@ class Ball extends Entity {
     if (angle > 180) angle -= 360;
     if (angle < -180) angle += 360;
     return angle;
+  }
+
+  split() {
+    const ball2 = new Ball(this.sprite.x, this.sprite.y);
+    ball2.setVelocity(-this.sprite.body.velocity.x, this.sprite.body.velocity.y);
+    const ball3 = new Ball(this.sprite.x, this.sprite.y);
+    ball3.setVelocity(this.sprite.body.velocity.x, -this.sprite.body.velocity.y);
   }
 }

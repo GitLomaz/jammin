@@ -23,7 +23,11 @@ let titleScene = new Phaser.Class({
 
   create: function () {
     scene = this;
-    jsonData = this.cache.json.get('testData').layers[0].data;
+    jsonData = this.cache.json.get('testData');
+    this.blocks = this.add.group();
+    this.balls = this.add.group();
+
+    generateLevel(jsonData);
 
     // Remove this once we get bottom.. kinda doing stuff
     this.matter.world.setBounds(
@@ -31,18 +35,6 @@ let titleScene = new Phaser.Class({
       128,  // thickness of the walls
       true, true, true, true // left, right, top, bottom enabled
     );
-
-    this.blocks = this.add.group();
-
-    // Loading JSON from Tiled object
-    for (let i = 0; i < 12; i++) {
-      for (let j = 0; j < 16; j++) {
-        let block = jsonData.shift();
-        if (block === 0) continue;
-        // new StandardBlock(64 + j * 60, 70 + i * 40, block - 1);
-        new CrumbleBlock(64 + j * 60, 70 + i * 40);
-      }
-    }
 
     this.paddle = new Paddle(GAME_WIDTH / 2, GAME_HEIGHT - 20);
     this.ball = new Ball(GAME_WIDTH / 2, (GAME_HEIGHT - 20) - 15);
@@ -63,7 +55,7 @@ let titleScene = new Phaser.Class({
 
   update: function (time) {
     this.paddle.update();
-    this.ball.update();
+    this.balls.children.each((ball) => ball.update());
   },
 });
 
@@ -101,4 +93,31 @@ function drawBoundaries() {
 
   g.strokePath();
   g.setScrollFactor(0);
+}
+
+function generateLevel(jsonData) {
+  for (let i = 0; i < jsonData.height; i++) {
+    for (let j = 0; j < jsonData.width; j++) {
+      const xSpacing = jsonData.width === 20? 60 : 53;
+      const ySpacing = jsonData.height === 12? 40 : 30;
+      const xMargin = jsonData.width === 20? 64 : 30;
+      const yMargin = jsonData.height === 12? 70 : 30;
+      let block = jsonData.layers[0].data.shift();
+      switch (block) {
+        case 0:
+          continue;
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+          new StandardBlock(xMargin + j * xSpacing, yMargin + i * ySpacing, block - 1);
+          break;
+        case 5:
+        case 6:
+        case 7:
+          new CrumbleBlock(xMargin + j * xSpacing, yMargin + i * ySpacing, block - 4);
+          break;
+      }
+    }
+  }
 }
