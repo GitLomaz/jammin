@@ -14,10 +14,8 @@ let titleScene = new Phaser.Class({
     this.load.image('paddleLeft', 'images/paddleLeft.png');
     this.load.image('paddleMiddle', 'images/paddleMiddle.png');
     this.load.image('paddleRight', 'images/paddleRight.png');
-    this.load.spritesheet('block', 'images/block.png', { frameWidth: 53, frameHeight: 30 });
-    this.load.spritesheet('crumbleBlock', 'images/crumbleBlock.png', { frameWidth: 53, frameHeight: 30 });
-
-    this.load.json('testData', 'images/test.json');
+    this.load.spritesheet('blocks', 'images/blocks.png', { frameWidth: 53, frameHeight: 30 });
+    this.load.json('testData', 'js/data/1_1.json');
 
   },
 
@@ -96,12 +94,16 @@ function drawBoundaries() {
 }
 
 function generateLevel(jsonData) {
+  console.log(jsonData);
+  // MAP SIZE OPTIONS: 
+  // X = 20 or 23 (spacing or no spacing in tiles)
+  // Y = 12 or up to 17 (spacing on 12, none on others)
   for (let i = 0; i < jsonData.height; i++) {
     for (let j = 0; j < jsonData.width; j++) {
       const xSpacing = jsonData.width === 20? 60 : 53;
       const ySpacing = jsonData.height === 12? 40 : 30;
-      const xMargin = jsonData.width === 20? 64 : 30;
-      const yMargin = jsonData.height === 12? 70 : 30;
+      const xMargin = jsonData.width === 20? 64 : 56;
+      const yMargin = 70;
       let block = jsonData.layers[0].data.shift();
       switch (block) {
         case 0:

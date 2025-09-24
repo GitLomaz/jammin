@@ -5,7 +5,7 @@ class StandardBlock extends Block {
     this.health = 1;
     this.score = 50;
 
-    this.sprite = scene.matter.add.sprite(x, y, 'block', frame, {
+    this.sprite = scene.matter.add.sprite(x, y, 'blocks', frame, {
       isStatic: true,
       restitution: 0,
       friction: 0,

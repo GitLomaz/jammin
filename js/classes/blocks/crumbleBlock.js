@@ -2,10 +2,11 @@ class CrumbleBlock extends Block {
   constructor(x, y, frame = 2) {
     super(x, y);
 
-    this.health = frame + 1;
+    this.health = frame + 2;
     this.score = 150;
+    console.log(this.health)
 
-    this.sprite = scene.matter.add.sprite(x, y, 'crumbleBlock', 2 - frame, {
+    this.sprite = scene.matter.add.sprite(x, y, 'blocks', 5 - frame, {
       isStatic: true,
       restitution: 0,
       friction: 0,
@@ -34,7 +35,7 @@ class CrumbleBlock extends Block {
     if (this.health <= 0) {
       this.die();
     } else {
-      this.sprite.setFrame(3 - this.health);
+      this.sprite.setFrame(7 - this.health);
     }
   }
 }
