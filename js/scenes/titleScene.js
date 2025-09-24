@@ -17,6 +17,7 @@ let titleScene = new Phaser.Class({
     this.load.image('iron', 'images/iron.png');
     this.load.image('ironLeft', 'images/ironLeft.png');
     this.load.image('ironRight', 'images/ironRight.png');
+    this.load.image('portal', 'images/portal.png');
     this.load.spritesheet('blocks', 'images/blocks.png', { frameWidth: 53, frameHeight: 30 });
     this.load.json('level', 'js/data/' +  currentLevel[0] + '_' + currentLevel[1] + '.json');
 
@@ -27,6 +28,7 @@ let titleScene = new Phaser.Class({
     jsonData = this.cache.json.get('level');
     this.blocks = this.add.group();
     this.balls = this.add.group();
+    this.portals = this.add.group();
 
     generateLevel(jsonData);
 
@@ -57,6 +59,7 @@ let titleScene = new Phaser.Class({
   update: function (time) {
     this.paddle.update();
     this.balls.children.each((ball) => ball.update());
+    this.portals.children.each((portal) => portal.update());
     // iterate this.blocks to see if there is any left with breakable = true
     let anyBreakableLeft = false;
     this.blocks.children.each((block) => {
@@ -66,14 +69,13 @@ let titleScene = new Phaser.Class({
     });
 
     if (!anyBreakableLeft) {
-      console.log('level complete!');
+      generatePortals();
     }
   },
 });
 
 function drawBoundaries() {
   const borderWidth = 30;
-  const borderColor = 0x717171;
 
   // === Matter walls ===
   const options = { isStatic: true, isSensor: false, restitution: 1, friction: 0, frictionStatic: 0, frictionAir: 0 };
@@ -125,6 +127,13 @@ function drawBoundaries() {
     GAME_HEIGHT,
     'ironRight'
   );
+}
+
+function generatePortals() {
+  if (scene.portals.children.size === 0) {
+    new Portal(15, GAME_HEIGHT - 42);
+    new Portal(GAME_WIDTH - 15, GAME_HEIGHT - 42);
+  }
 }
 
 function generateLevel(jsonData) {
