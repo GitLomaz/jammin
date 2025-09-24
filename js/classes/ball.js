@@ -36,22 +36,20 @@ class Ball extends Entity {
     let currentSpeed = Math.sqrt(vx * vx + vy * vy);
 
     if (currentSpeed === 0) {
-      // restart if stuck
       this.setVelocity(this.speed, -this.speed);
       return;
     }
 
-    let angle = Math.atan2(vy, vx); // radians
-    console.log(angle)
-
+    let angle = Math.atan2(vy, vx);
     if (angle > 1.832 && angle < 1.9) {
-      console.log("clamp")
       angle = 1.9;
     } else if (angle < -1.832 && angle > -1.9) {
-      console.log("clamp")
       angle = -1.9;
+    } else if (angle > -0.314 && angle < 0.314) {
+      angle = 0.314;
+    } else if (angle < -0.314 && angle > -0.314) {
+      angle = -0.314;
     }
-
 
     vx = Math.cos(angle) * this.speed;
     vy = Math.sin(angle) * this.speed;

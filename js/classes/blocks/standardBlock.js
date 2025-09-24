@@ -16,7 +16,6 @@ class StandardBlock extends Block {
   }
 
   die() {
-    // shrink to nothing
     scene.tweens.add({
       targets: this.sprite,
       scaleX: 0,
@@ -30,7 +29,6 @@ class StandardBlock extends Block {
   }
 
   hit() {
-    console.log('hit?!')
     this.die();
   }
 }

@@ -4,7 +4,6 @@ class CrumbleBlock extends Block {
 
     this.health = frame + 2;
     this.score = 150;
-    console.log(this.health)
 
     this.sprite = scene.matter.add.sprite(x, y, 'blocks', 5 - frame, {
       isStatic: true,
