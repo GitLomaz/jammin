@@ -26,10 +26,15 @@ class Paddle extends Entity {
     scene.matter.add.gameObject(this, this.body);
     scene.add.existing(this);
 
-    scene.input.on("pointermove", (pointer) => {
+    const MAX_SPEED = 15;
+    scene.events.on('update', () => {
+      const pointer = scene.input.activePointer;
       const halfWidth = this.width / 2;
       let targetX = Phaser.Math.Clamp(pointer.x, halfWidth, GAME_WIDTH - halfWidth);
-      scene.matter.body.setPosition(this.body, { x: targetX, y: y + 20 });
+      let currentX = this.body.position.x;
+      let dx = targetX - currentX;
+      let moveX = Math.min(Math.abs(dx), MAX_SPEED) * Math.sign(dx);
+      scene.matter.body.setPosition(this.body, { x: currentX + moveX, y: y + 20 });
       this.setPosition(this.body.position.x, this.body.position.y);
       this.checkPortals();
     });
