@@ -2,14 +2,31 @@
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>Game</title>
+    <style media='screen' type='text/css'>
+      @font-face {
+        font-family: font1;
+        src: url('font.ttf');
+        font-weight:400;
+        font-weight:normal;
+      }
+      canvas {
+        border: 4px solid rgb(65, 75, 167);
+      }
+      body {
+        background-color: #252945;
+        overflow: hidden;
+      }
+    </style>
     <script type="text/javascript" src="./js/libs/phaser3.js"></script>
     <script type="text/javascript" src="./js/libs/random.js"></script>
+    <script type="text/javascript" src="./js/libs/fontfaceobserver.js"></script>
     <script type="text/javascript" src="./js/globals.js"></script>
     <script type="text/javascript" src="./js/common.js"></script>
     <script type="text/javascript" src="./js/classes/portal.js"></script>
     <script type="text/javascript" src="./js/classes/entity.js"></script>
     <script type="text/javascript" src="./js/classes/ball.js"></script>
     <script type="text/javascript" src="./js/classes/paddle.js"></script>
+    <script type="text/javascript" src="./js/classes/ui/title.js"></script>
     <script type="text/javascript" src="./js/classes/block.js"></script>
     <script type="text/javascript" src="./js/classes/blocks/leaf.js"></script>
     <script type="text/javascript" src="./js/classes/blocks/standardBlock.js"></script>
@@ -20,6 +37,7 @@
     <script type="text/javascript" src="./js/main.js"></script>
   </head>
   <body style="margin: 0px;">
+    <div style="font-family:font1; position:absolute; left:-1000px; visibility:hidden;">.</div>
     <div id="wrapperContainer">
       <div id="wrapper" style="width: 1128px; height: 615px"></div>
     </div>
