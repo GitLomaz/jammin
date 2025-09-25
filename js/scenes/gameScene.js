@@ -1,8 +1,8 @@
-let titleScene = new Phaser.Class({
+let gameScene = new Phaser.Class({
   Extends: Phaser.Scene,
-  initialize: function titleScene() {
+  initialize: function gameScene() {
     Phaser.Scene.call(this, {
-      key: "titleScene",
+      key: "gameScene",
     });
   },
 

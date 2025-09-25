@@ -11,9 +11,6 @@ let titleScene = new Phaser.Class({
 
   create: function () {
     scene = this;
-<<<<<<< HEAD
-  },
-=======
     jsonData = this.cache.json.get('level' + JSON.stringify(currentLevel));
     this.blocks = this.add.group();
     this.balls = this.add.group();
@@ -50,8 +47,7 @@ let titleScene = new Phaser.Class({
       });
     });
   },  
->>>>>>> 735f2120d62c08ed84b0ab5c5752b7de15cdc0fd
-
+  
   update: function (time) {
   },
 });
