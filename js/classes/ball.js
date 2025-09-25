@@ -41,15 +41,15 @@ class Ball extends Entity {
     }
 
     let angle = Math.atan2(vy, vx);
-    if (angle > 1.832 && angle < 1.9) {
-      angle = 1.9;
-    } else if (angle < -1.832 && angle > -1.9) {
-      angle = -1.9;
-    } else if (angle > -0 && angle < 0.314) {
-      angle = 0.314;
-    } else if (angle < -0.314 && angle > 0) {
-      angle = -0.314;
-    }
+    // if (angle > 1.832 && angle < 1.9) {
+    //   angle = 1.9;
+    // } else if (angle < -1.832 && angle > -1.9) {
+    //   angle = -1.9;
+    // } else if (angle > -0 && angle < 0.314) {
+    //   angle = 0.314;
+    // } else if (angle < -0.314 && angle > 0) {
+    //   angle = -0.314;
+    // }
 
     vx = Math.cos(angle) * this.speed;
     vy = Math.sin(angle) * this.speed;

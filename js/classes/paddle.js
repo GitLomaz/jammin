@@ -18,7 +18,7 @@ class Paddle extends Entity {
     this.balls = [];
 
     this.body = scene.matter.add.rectangle(x, y + 20, this.width, this.height, {
-      chamfer: { radius: 30 },
+      // chamfer: { radius: 30 },
       restitution: 0,
       friction: 0,
       isStatic: true
@@ -58,6 +58,7 @@ class Paddle extends Entity {
   }
 
   update() {
+    // this.setPosition(this.body, this.body.position.y);
     if (this.demoMode) {
       this.setPosition(this.demoMode.sprite.x, this.body.position.y);
     }
