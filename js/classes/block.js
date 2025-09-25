@@ -16,5 +16,7 @@ class Block extends Entity {
     if (this.health <= 0) {
       this.die();
     }
+
+    // TODO: Randomize spawning power ups
   }
 }
