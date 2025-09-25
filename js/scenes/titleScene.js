@@ -62,7 +62,5 @@ let titleScene = new Phaser.Class({
   update: function (time) {
     this.paddle.update();
     this.ball.update();
-    console.log(this.ball.sprite.body.velocity);
-    // console.log(this.ball.body.x);
   },
 });
