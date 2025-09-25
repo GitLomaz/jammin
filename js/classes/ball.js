@@ -17,7 +17,7 @@ class Ball extends Entity {
     this.sprite.setIgnoreGravity(true); // just in case
 
     // give initial push
-    this.setVelocity(2, -this.speed);
+    this.setVelocity(Phaser.Math.Between(-this.speed, this.speed), -this.speed);
     scene.balls.add(this);
   }
 
