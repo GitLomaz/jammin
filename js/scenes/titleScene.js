@@ -49,9 +49,15 @@ let titleScene = new Phaser.Class({
         const { bodyA, bodyB } = pair;
         const labels = [bodyA.label, bodyB.label];
         if (labels.includes('ball') && labels.includes('block')) {
-          let blockBody = labels[0] === 'block' ? bodyA : bodyB;     
+          let blockBody = labels[0] === 'block' ? bodyA : bodyB;
           if (!blockBody || !blockBody.gameObject) {return}
           blockBody.gameObject.hit();
+        }
+
+        // PowerUp into Player collision
+        if (labels.includes('paddle') && labels.includes('powerUp')) {
+          const powerUp = labels[0] === 'powerUp' ? bodyA : bodyB;
+          powerUp.gameObject.collect();
         }
       });
     });
