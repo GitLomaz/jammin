@@ -9,7 +9,7 @@ let titleScene = new Phaser.Class({
   preload: function () {
     console.log('preloading')
     console.log(currentLevel)
-    this.load.image('ball', 'images/ball.png');
+    this.load.image('ball', 'images/hotBall.png');
     this.load.image('leaf1', 'images/leaf1.png');
     this.load.image('leaf2', 'images/leaf2.png');
     this.load.image('leaf3', 'images/leaf3.png');
@@ -20,6 +20,7 @@ let titleScene = new Phaser.Class({
     this.load.image('ironLeft', 'images/ironLeft.png');
     this.load.image('ironRight', 'images/ironRight.png');
     this.load.image('portal', 'images/portal.png');
+    this.load.image('bg', 'images/bg.png');
     this.load.spritesheet('blocks', 'images/blocks.png', { frameWidth: 53, frameHeight: 30 });
     this.load.json('level' + JSON.stringify(currentLevel), 'js/data/' +  currentLevel[0] + '_' + currentLevel[1] + '.json');
   },
@@ -30,6 +31,9 @@ let titleScene = new Phaser.Class({
     this.blocks = this.add.group();
     this.balls = this.add.group();
     this.portals = this.add.group();
+
+    // background
+    this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'bg').setAlpha(0.6);
 
     generateLevel(jsonData);
 
@@ -155,7 +159,9 @@ function generateLevel(jsonData) {
         case 2:
         case 3:
         case 4:
-          console.log('adding bricks!')
+        case 9:
+        case 10:
+        case 11:
           new StandardBlock(xMargin + j * xSpacing, yMargin + i * ySpacing, block - 1);
           break;
         case 5:
