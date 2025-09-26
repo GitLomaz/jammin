@@ -7,17 +7,18 @@ let gameScene = new Phaser.Class({
   },
 
   preload: function () {
-    this.load.json('level' + JSON.stringify(currentLevel), 'js/data/' +  currentLevel[0] + '_' + currentLevel[1] + '.json');
+    this.load.json('level' + JSON.stringify(stats.currentLevel), 'js/data/' +  stats.currentLevel[0] + '_' + stats.currentLevel[1] + '.json');
   },
 
   create: function () {
     scene = this;
-    jsonData = this.cache.json.get('level' + JSON.stringify(currentLevel));
+    jsonData = this.cache.json.get('level' + JSON.stringify(stats.currentLevel));
     this.blocks = this.add.group();
     this.balls = this.add.group();
     this.portals = this.add.group();
 
     this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'bg').setAlpha(0.6);
+    this.ui = new Game();
     this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'gameFrame');
 
     generateLevel(jsonData);
