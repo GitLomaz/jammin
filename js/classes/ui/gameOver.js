@@ -39,7 +39,6 @@ class GameOver extends Phaser.GameObjects.Container {
         this.submitScore.setColor('#dfedef');
       })
       .on('pointerdown', () => {
-        // start title scene
         playerName = this.input.textValue || this.input.placeholder;
         scene.scene.stop(scene.scene.key);
         const data = btoa(

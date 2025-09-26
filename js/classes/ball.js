@@ -29,7 +29,7 @@ class Ball extends Entity {
     const body = this.sprite.body;
     if (!body) return;
 
-    this.sprite.rotation = 0; // prevent rotation
+    this.sprite.rotation = 0;
 
     let vx = body.velocity.x;
     let vy = body.velocity.y;
@@ -69,14 +69,7 @@ class Ball extends Entity {
       }
     }
   }
-
-  normalizeDegrees(angle) {
-    angle = angle % 360;
-    if (angle > 180) angle -= 360;
-    if (angle < -180) angle += 360;
-    return angle;
-  }
-
+  
   split() {
     const ball2 = new Ball(this.sprite.x, this.sprite.y);
     ball2.setVelocity(-this.sprite.body.velocity.x, this.sprite.body.velocity.y);
