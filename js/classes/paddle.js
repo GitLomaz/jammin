@@ -78,4 +78,12 @@ class Paddle extends Entity {
       this.setPosition(targetX , this.body.position.y);
     }
   }
+
+  spawnBall() {
+    this.hasBall = true;
+    if (this.hasBall) {
+      this.fakeBall = scene.add.image(0, -40, "ball");
+      this.add(this.fakeBall);
+    }
+  }
 }
