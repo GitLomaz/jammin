@@ -6,6 +6,7 @@ let scene;
 const SCORE_SIDEBAR_WIDTH = 256;
 const PLAY_AREA_WIDTH = 1024;
 const PLAY_AREA_HEIGHT = 720;
+let playerName = false;
 
 let stats = {
   score: 0,

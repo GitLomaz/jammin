@@ -64,7 +64,7 @@ class Ball extends Entity {
         if (stats.lives > 0) {
           scene.paddle.spawnBall();
         } else {
-          // GAME OVER
+          new GameOver();
         }
       }
     }

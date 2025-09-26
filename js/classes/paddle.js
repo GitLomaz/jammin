@@ -35,17 +35,22 @@ class Paddle extends Entity {
     const MAX_SPEED = 15;
 
     if (!demoMode) {
-      scene.events.on('update', () => {
-        const pointer = scene.input.activePointer;
-        const halfWidth = this.width / 2;
-        let targetX = Phaser.Math.Clamp(pointer.x, halfWidth, GAME_WIDTH - halfWidth);
-        let currentX = this.body.position.x;
-        let dx = targetX - currentX;
-        let moveX = Math.min(Math.abs(dx), MAX_SPEED) * Math.sign(dx);
-        scene.matter.body.setPosition(this.body, { x: currentX + moveX, y: y + 20 });
-        this.setPosition(this.body.position.x, this.body.position.y);
-        this.checkPortals();
-      });
+      try {
+        scene.events.on('update', () => {
+          if (!this?.body?.position) {
+            return;
+          }
+          const pointer = scene.input.activePointer;
+          const halfWidth = this.width / 2;
+          let targetX = Phaser.Math.Clamp(pointer.x, halfWidth, GAME_WIDTH - halfWidth);
+          let currentX = this.body.position.x;
+          let dx = targetX - currentX;
+          let moveX = Math.min(Math.abs(dx), MAX_SPEED) * Math.sign(dx);
+          scene.matter.body.setPosition(this.body, { x: currentX + moveX, y: y + 20 });
+          this.setPosition(this.body.position.x, this.body.position.y);
+          this.checkPortals();
+        });
+      } catch (error) {}
       scene.input.on('pointerdown', () => {
         if (this.hasBall) {
           this.hasBall = false;

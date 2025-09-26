@@ -33,12 +33,13 @@ function drawBoundaries(title = false) {
 }
 
 function resetStats() {
-  stats.lives = 3;
+  stats.lives = 1;
   stats.score = 0;
   stats.currentLevel = [1, 1];
 }
 
 function generateLevel(jsonData, title = false) {
+  jsonData = JSON.parse(JSON.stringify(jsonData));
   // MAP SIZE OPTIONS: 
   // X = 20 or 23 (spacing or no spacing in tiles)
   // Y = 12 or up to 17 (spacing on 12, none on others)

@@ -26,6 +26,7 @@ let titleScene = new Phaser.Class({
     this.load.image('portal', 'images/portal.png');
     this.load.image('bg', 'images/bg.png');
     this.load.image('life', 'images/life.png');
+    this.load.image('border', 'images/border.png');
     this.load.image('titleFrame', 'images/titleFrame.png');
     this.load.image('gameFrame', 'images/gameFrame.png');
     this.load.spritesheet('blocks', 'images/blocks.png', { frameWidth: 53, frameHeight: 30 });

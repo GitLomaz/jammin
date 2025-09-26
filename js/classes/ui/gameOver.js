@@ -2,22 +2,25 @@ class GameOver extends Phaser.GameObjects.Container {
   constructor() {
     super(scene, 0, 0);
 
+    // add border image
+    const border = scene.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'border');
+    this.add(border);
+
     let texts = [];
 
-    this.title = scene.add.text(GAME_WIDTH / 2, 100, 'GAME OVER', {
+    this.title = scene.add.text(GAME_WIDTH / 2, 200, 'GAME OVER', {
       fontFamily: 'font1',
       fontSize: '42px'
     }).setOrigin(0.5).setAlpha(0);
     this.add(this.title);
     texts.push(this.title);
 
-    this.totalScore = scene.add.text(GAME_WIDTH / 2, 160, 'Total Score: ' + stats.score, {
+    this.totalScore = scene.add.text(GAME_WIDTH / 2, 260, 'Total Score: ' + stats.score, {
       fontFamily: 'font1',
       fontSize: '32px'
     }).setOrigin(0.5).setAlpha(0);
     this.add(this.totalScore);
     texts.push(this.totalScore);
-
     
     this.input = new TextInput(GAME_WIDTH / 2, 400);
     this.add(this.input);
@@ -30,10 +33,10 @@ class GameOver extends Phaser.GameObjects.Container {
     }).setOrigin(0.5)
       .setInteractive({ useHandCursor: true })
       .on('pointerover', () => {
-        this.submitScore.setColor('#00ffff');
+        this.submitScore.setColor('#167d52');
       })
       .on('pointerout', () => {
-        this.submitScore.setColor('#ffffff');
+        this.submitScore.setColor('#dfedef');
       })
       .on('pointerdown', () => {
         // start title scene
@@ -54,10 +57,10 @@ class GameOver extends Phaser.GameObjects.Container {
     }).setOrigin(0.5)
       .setInteractive({ useHandCursor: true })
       .on('pointerover', () => {
-        this.playAgain.setColor('#00ffff');
+        this.playAgain.setColor('#167d52');
       })
       .on('pointerout', () => {
-        this.playAgain.setColor('#ffffff');
+        this.playAgain.setColor('#dfedef');
       })
       .on('pointerdown', () => {
         resetStats();
