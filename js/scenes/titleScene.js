@@ -98,6 +98,10 @@ let titleScene = new Phaser.Class({
           if (!blockBody || !blockBody.gameObject) {return}
           blockBody.gameObject.hit();
         }
+
+        if (labels.includes('paddle') && labels.includes('ball')) {
+          scene.sounds["bounce" + Phaser.Math.Between(1, 3)].play();
+        }
       });
     });
 

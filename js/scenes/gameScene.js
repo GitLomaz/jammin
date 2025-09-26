@@ -77,6 +77,7 @@ let gameScene = new Phaser.Class({
           const vx = speed * Math.sin(angle);
           const vy = -speed * Math.cos(angle);
           scene.matter.body.setVelocity(ballBody, { x: vx, y: vy });
+          scene.sounds["bounce" + Phaser.Math.Between(1, 3)].play();
         }
           
         // laser
@@ -107,6 +108,7 @@ let gameScene = new Phaser.Class({
     });
 
     if (!anyBreakableLeft) {
+      scene.sounds["levelClear"].play();
       generatePortals();
     }
   },
