@@ -17,6 +17,10 @@ class CrumbleBlock extends Block {
 
   die() {
     // shrink to nothing
+    stats.score += this.score;
+    if (scene.ui?.updateScore) {
+      scene.ui.updateScore(stats.score);
+    }
     scene.tweens.add({
       targets: this.sprite,
       scaleX: 0,

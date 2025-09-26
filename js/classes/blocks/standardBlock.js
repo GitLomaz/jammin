@@ -16,6 +16,10 @@ class StandardBlock extends Block {
   }
 
   die() {
+    stats.score += this.score;
+    if (scene.ui?.updateScore) {
+      scene.ui.updateScore(stats.score);
+    }
     scene.tweens.add({
       targets: this.sprite,
       scaleX: 0,

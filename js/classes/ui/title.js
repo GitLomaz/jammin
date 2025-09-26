@@ -14,7 +14,7 @@ class Title extends Phaser.GameObjects.Container {
 
     const menuItems = [
       { text: 'START GAME', action: () => {
-        // resetStats();
+        resetStats();
         scene.scene.stop(scene.scene.key);
         scene.scene.start('gameScene');
       }},
