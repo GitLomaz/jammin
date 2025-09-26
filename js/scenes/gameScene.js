@@ -17,8 +17,8 @@ let gameScene = new Phaser.Class({
     this.balls = this.add.group();
     this.portals = this.add.group();
 
-    // background
     this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'bg').setAlpha(0.6);
+    this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'gameFrame');
 
     generateLevel(jsonData);
 

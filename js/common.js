@@ -1,4 +1,4 @@
-function drawBoundaries() {
+function drawBoundaries(title = false) {
   const borderWidth = 30;
 
   // === Matter walls ===
@@ -7,17 +7,10 @@ function drawBoundaries() {
   // Top boundary
   scene.matter.add.rectangle(
     GAME_WIDTH / 2,
-    borderWidth / 2,
+    borderWidth / 2 + (title ? 0 : 60),
     GAME_WIDTH,
     borderWidth,
     { ...options, label: 'top_wall' }
-  );
-  scene.add.tileSprite(
-    GAME_WIDTH / 2,
-    borderWidth / 2,
-    GAME_WIDTH + 46,
-    borderWidth,
-    'iron'
   );
 
   // Left boundary
@@ -28,13 +21,6 @@ function drawBoundaries() {
     GAME_HEIGHT,
     { ...options, label: 'left_wall' }
   );
-  scene.add.tileSprite(
-    borderWidth / 2,
-    GAME_HEIGHT / 2,
-    borderWidth,
-    GAME_HEIGHT,
-    'ironLeft'
-  );
 
   // Right boundary
   scene.matter.add.rectangle(
@@ -44,16 +30,9 @@ function drawBoundaries() {
     GAME_HEIGHT,
     { ...options, label: 'right_wall' }
   );
-  scene.add.tileSprite(
-    GAME_WIDTH - borderWidth / 2,
-    GAME_HEIGHT / 2,
-    borderWidth,
-    GAME_HEIGHT,
-    'ironRight'
-  );
 }
 
-function generateLevel(jsonData) {
+function generateLevel(jsonData, title = false) {
   // MAP SIZE OPTIONS: 
   // X = 20 or 23 (spacing or no spacing in tiles)
   // Y = 12 or up to 17 (spacing on 12, none on others)
@@ -62,7 +41,7 @@ function generateLevel(jsonData) {
       const xSpacing = jsonData.width === 20? 60 : 53;
       const ySpacing = jsonData.height === 12? 40 : 30;
       const xMargin = jsonData.width === 20? 69 : 56;
-      const yMargin = 70;
+      const yMargin = title ? 60 : 130;
       let block = jsonData.layers[0].data.shift();
       switch (block) {
         case 0:
