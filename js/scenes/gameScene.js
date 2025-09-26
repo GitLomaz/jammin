@@ -30,7 +30,6 @@ let gameScene = new Phaser.Class({
     );
 
     this.paddle = new Paddle(GAME_WIDTH / 2, GAME_HEIGHT - 20);
-    this.ball = new Ball(GAME_WIDTH / 2, (GAME_HEIGHT - 20) - 15);
     drawBoundaries();
 
     this.matter.world.on('collisionstart', (event) => {
@@ -47,6 +46,24 @@ let gameScene = new Phaser.Class({
         if (labels.includes('paddle') && labels.includes('powerUp')) {
           const powerUp = labels[0] === 'powerUp' ? bodyA : bodyB;
           powerUp.gameObject.collect();
+        }
+          
+        // paddle
+        if (labels.includes('paddle') && labels.includes('ball')) {
+          const paddleBody = bodyA.label === 'paddle' ? bodyA : bodyB;
+          const ballBody   = bodyA.label === 'ball'   ? bodyA : bodyB;
+          const offset = (ballBody.position.x - paddleBody.position.x);
+
+          const halfWidth = paddleBody.bounds.max.x - paddleBody.position.x;
+          const normalized = Phaser.Math.Clamp(offset / halfWidth, -1, 1);
+
+          const maxAngle = Phaser.Math.DegToRad(60);
+          const angle = normalized * maxAngle;
+
+          const speed = 6;
+          const vx = speed * Math.sin(angle);
+          const vy = -speed * Math.cos(angle);
+          scene.matter.body.setVelocity(ballBody, { x: vx, y: vy });
         }
       });
     });

@@ -15,13 +15,19 @@ class Paddle extends Entity {
     this.height = 50;
     this.demoMode = demoMode;
 
-    this.balls = [];
+    this.hasBall = !demoMode;
+    if (this.hasBall) {
+      this.fakeBall = scene.add.image(0, -40, "ball");
+      this.add(this.fakeBall);
+    }
 
     this.body = scene.matter.add.rectangle(x, y + 20, this.width, this.height, {
       restitution: 0,
       friction: 0,
       isStatic: true
     });
+
+    this.body.label = "paddle";
 
     scene.matter.add.gameObject(this, this.body);
     scene.add.existing(this);
@@ -40,8 +46,14 @@ class Paddle extends Entity {
         this.setPosition(this.body.position.x, this.body.position.y);
         this.checkPortals();
       });
+      scene.input.on('pointerdown', () => {
+        if (this.hasBall) {
+          this.hasBall = false;
+          this.fakeBall.destroy();
+          new Ball(this.body.position.x, this.body.position.y - 20);
+        }
+      });
     }
-
   }
 
   checkPortals() {
