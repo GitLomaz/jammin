@@ -37,7 +37,6 @@ let titleScene = new Phaser.Class({
     scene = this;
     this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'bg').setAlpha(0.6);
     this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'titleFrame');
-    this.ui = new Title();
     jsonData = this.cache.json.get('titleJson');
 
     this.blocks = this.add.group();
@@ -49,6 +48,7 @@ let titleScene = new Phaser.Class({
     this.ball = new Ball(GAME_WIDTH / 2, (GAME_HEIGHT - 20) - 15);
     this.paddle = new Paddle(GAME_WIDTH / 2, GAME_HEIGHT - 20, this.ball);
     drawBoundaries(true);
+    this.ui = new Title();
 
     this.matter.world.on('collisionstart', (event) => {
       event.pairs.forEach((pair) => {
@@ -61,6 +61,10 @@ let titleScene = new Phaser.Class({
         }
       });
     });
+
+    if (this.submitScore) {
+      this.ui.buildHighScores(this.submitScore);
+    }
   },  
 
   update: function (time) {
