@@ -15,11 +15,14 @@ class Title extends Phaser.GameObjects.Container {
     const menuItems = [
       { text: 'START GAME', action: () => {
         resetStats();
+        scene.sounds["click"].play();
         scene.scene.stop(scene.scene.key);
         scene.scene.start('gameScene');
+        
       }},
       { text: 'HIGH SCORES', action: () => {
         this.buildHighScores();
+        scene.sounds["click"].play();
       } }
     ];
 
@@ -51,6 +54,24 @@ class Title extends Phaser.GameObjects.Container {
     // this.createControlsDisplay();
     scene.add.existing(this);
     this.buildHighScores = this.buildHighScores.bind(this);
+
+    let mute = scene.add
+      .sprite(50, 650, "mute")
+      .setOrigin(0)
+      .setInteractive()
+      .setFrame(muteAll ? 1 : 0);
+
+    mute.on(
+      "pointerdown",
+      function () {
+        muteAll = !muteAll;
+        game.sound.mute = muteAll;
+        scene.sounds["click"].play();
+        mute.setFrame(muteAll ? 1 : 0);
+      },
+      this
+    );
+    this.add(mute);
   }
 
   showHighScores() {
@@ -96,6 +117,8 @@ class Title extends Phaser.GameObjects.Container {
     backText.on('pointerover', () => backText.setColor('#00ffff'));
     backText.on('pointerout', () => backText.setColor('#ffffff'));
     backText.on('pointerdown', () => {
+      
+      scene.sounds["click"].play();
       this.menuOptions.forEach(option => option.setVisible(true));
       this.highScoreObjects.forEach(obj => obj.destroy());
       this.border.destroy();

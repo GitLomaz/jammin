@@ -31,14 +31,52 @@ let titleScene = new Phaser.Class({
     this.load.image('titleFrame', 'images/titleFrame.png');
     this.load.image('gameFrame', 'images/gameFrame.png');
     this.load.spritesheet('blocks', 'images/blocks.png', { frameWidth: 53, frameHeight: 30 });
+    this.load.spritesheet("mute", "images/mute.png", { frameWidth: 32, frameHeight: 32 });
     this.load.json('titleJson', 'js/data/title.json');
+
+    this.load.audio("click", "audio/click.mp3");
+    this.load.audio("bounce1", "audio/bounce_1.mp3");
+    this.load.audio("bounce2", "audio/bounce_2.mp3");
+    this.load.audio("bounce3", "audio/bounce_3.mp3");
+    this.load.audio("brickMetal", "audio/brick_metal.mp3");
+    this.load.audio("brickMeteor", "audio/brick_meteor.mp3");
+    this.load.audio("brickNormal", "audio/brick_normal.mp3");
+    this.load.audio("levelClear", "audio/level_clear.mp3");
+    this.load.audio("music", "audio/music.mp3");
+    this.load.audio("puFire", "audio/pu_fire.mp3");
+    this.load.audio("puLaser", "audio/pu_laser.mp3");
+    this.load.audio("puPaddle", "audio/pu_paddle.mp3");
+    this.load.audio("puPortal", "audio/pu_portal.mp3");
   },
+
+  
 
   create: function () {
     scene = this;
     this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'bg').setAlpha(0.6);
     this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'titleFrame');
     jsonData = this.cache.json.get('titleJson');
+
+    this.sounds = [];
+    this.sound.pauseOnBlur = false;
+    this.sounds["click"] = this.sound.add("click");              // ADDED
+    this.sounds["bounce1"] = this.sound.add("bounce1");
+    this.sounds["bounce2"] = this.sound.add("bounce2");
+    this.sounds["bounce3"] = this.sound.add("bounce3");
+    this.sounds["brickMetal"] = this.sound.add("brickMetal");    // ADDED
+    this.sounds["brickMeteor"] = this.sound.add("brickMeteor");  // ADDED
+    this.sounds["brickNormal"] = this.sound.add("brickNormal");  // ADDED
+    this.sounds["levelClear"] = this.sound.add("levelClear");
+    this.sounds["puFire"] = this.sound.add("puFire");
+    this.sounds["puLaser"] = this.sound.add("puLaser");
+    this.sounds["puPaddle"] = this.sound.add("puPaddle");
+    this.sounds["puPortal"] = this.sound.add("puPortal");
+    if (!music) {
+      music = this.sound.add("music", { loop: true });
+    }
+    if (!music.isPlaying) {
+      music.play();
+    }
 
     this.blocks = this.add.group();
     this.balls = this.add.group();

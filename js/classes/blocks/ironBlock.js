@@ -30,4 +30,8 @@ class IronBlock extends Block {
       }
     });
   }
+
+  hit() {
+    scene.sounds["brickMetal"].play();
+  }
 }

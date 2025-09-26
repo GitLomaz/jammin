@@ -17,6 +17,7 @@ class StandardBlock extends Block {
 
   die() {
     stats.score += this.score;
+    scene.sounds["brickNormal"].play();
     this.sprite.setSensor(true);  
     this.dieing = true; 
     if (scene.ui?.updateScore) {

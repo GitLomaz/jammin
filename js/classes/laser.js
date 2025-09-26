@@ -2,6 +2,7 @@ class Laser extends Entity {
   constructor(x, y, direction = "up", paddleLaser = false) {
     super(x, y);
 
+    scene.sounds["puLaser"].play();
     this.speed = 10;
     this.direction = direction;
     this.destroyed = false;
@@ -12,7 +13,6 @@ class Laser extends Entity {
       label: "laser",
     });
     this.sprite.body.gameObject = this;
-
     switch (this.direction) {
       case "up":
         this.sprite.angle = 0;

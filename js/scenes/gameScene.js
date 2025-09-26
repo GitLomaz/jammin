@@ -18,6 +18,27 @@ let gameScene = new Phaser.Class({
     this.portals = this.add.group();
     this.lasers = this.add.group();
 
+    this.sounds = [];
+    this.sound.pauseOnBlur = false;
+    this.sounds["click"] = this.sound.add("click");
+    this.sounds["bounce1"] = this.sound.add("bounce1");
+    this.sounds["bounce2"] = this.sound.add("bounce2");
+    this.sounds["bounce3"] = this.sound.add("bounce3");
+    this.sounds["brickMetal"] = this.sound.add("brickMetal");
+    this.sounds["brickMeteor"] = this.sound.add("brickMeteor");
+    this.sounds["brickNormal"] = this.sound.add("brickNormal");
+    this.sounds["levelClear"] = this.sound.add("levelClear");
+    this.sounds["puFire"] = this.sound.add("puFire");
+    this.sounds["puLaser"] = this.sound.add("puLaser");
+    this.sounds["puPaddle"] = this.sound.add("puPaddle");
+    this.sounds["puPortal"] = this.sound.add("puPortal");
+    if (!music) {
+      music = this.sound.add("music", { loop: true });
+    }
+    if (!music.isPlaying) {
+      music.play();
+    }
+
     this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'bg').setAlpha(0.6);
     this.ui = new Game();
     this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'gameFrame');

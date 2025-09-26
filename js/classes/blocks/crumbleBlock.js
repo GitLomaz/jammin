@@ -36,6 +36,7 @@ class CrumbleBlock extends Block {
   }
 
   hit() {
+    scene.sounds["brickMeteor"].play();
     this.health -= 1;
     if (this.health <= 0) {
       this.die();
