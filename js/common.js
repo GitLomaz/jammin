@@ -33,7 +33,7 @@ function drawBoundaries(title = false) {
 }
 
 function resetStats() {
-  stats.lives = 1;
+  stats.lives = 3;
   stats.score = 0;
   stats.currentLevel = [1, 1];
 }
@@ -72,6 +72,12 @@ function generateLevel(jsonData, title = false) {
           break;
         case 12:
           new BombBlock(xMargin + j * xSpacing, yMargin + i * ySpacing);
+          break;
+        case 13:
+          new LaserBlock(xMargin + j * xSpacing, yMargin + i * ySpacing, true);
+          break;
+        case 14:
+          new LaserBlock(xMargin + j * xSpacing, yMargin + i * ySpacing, false);
           break;
       }
     }

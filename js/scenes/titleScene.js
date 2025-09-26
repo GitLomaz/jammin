@@ -25,6 +25,7 @@ let titleScene = new Phaser.Class({
     this.load.image('ironRight', 'images/ironRight.png');
     this.load.image('portal', 'images/portal.png');
     this.load.image('bg', 'images/bg.png');
+    this.load.image('laser', 'images/laser.png');
     this.load.image('life', 'images/life.png');
     this.load.image('border', 'images/border.png');
     this.load.image('titleFrame', 'images/titleFrame.png');

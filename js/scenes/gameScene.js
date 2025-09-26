@@ -16,6 +16,7 @@ let gameScene = new Phaser.Class({
     this.blocks = this.add.group();
     this.balls = this.add.group();
     this.portals = this.add.group();
+    this.lasers = this.add.group();
 
     this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'bg').setAlpha(0.6);
     this.ui = new Game();
@@ -47,17 +48,26 @@ let gameScene = new Phaser.Class({
           const paddleBody = bodyA.label === 'paddle' ? bodyA : bodyB;
           const ballBody   = bodyA.label === 'ball'   ? bodyA : bodyB;
           const offset = (ballBody.position.x - paddleBody.position.x);
-
           const halfWidth = paddleBody.bounds.max.x - paddleBody.position.x;
           const normalized = Phaser.Math.Clamp(offset / halfWidth, -1, 1);
-
           const maxAngle = Phaser.Math.DegToRad(60);
           const angle = normalized * maxAngle;
-
           const speed = 6;
           const vx = speed * Math.sin(angle);
           const vy = -speed * Math.cos(angle);
           scene.matter.body.setVelocity(ballBody, { x: vx, y: vy });
+        }
+          
+        // laser
+        if (labels.includes('laser') && labels.includes('block')) {
+          let blockBody = labels[0] === 'block' ? bodyA : bodyB;     
+          let laserBody = labels[0] === 'laser' ? bodyA : bodyB;     
+          if (!blockBody || !blockBody.gameObject || blockBody.gameObject.dieing) {return}
+          if (blockBody.gameObject.breakable) {
+            blockBody.gameObject.die();
+          } else {
+            laserBody.gameObject.die();
+          }
         }
       });
     });
@@ -65,6 +75,7 @@ let gameScene = new Phaser.Class({
 
   update: function (time) {
     this.paddle.update();
+    this.lasers.children.each((laser) => laser.update());
     this.balls.children.each((ball) => ball.update());
     this.portals.children.each((portal) => portal.update());
     let anyBreakableLeft = false;
