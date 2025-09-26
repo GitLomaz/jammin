@@ -17,6 +17,8 @@ class StandardBlock extends Block {
 
   die() {
     stats.score += this.score;
+    this.sprite.setSensor(true);  
+    this.dieing = true; 
     if (scene.ui?.updateScore) {
       scene.ui.updateScore(stats.score);
     }

@@ -10,6 +10,7 @@ class Paddle extends Entity {
     this.rightSprite = scene.add.image(50, -20, "paddleRight");
     this.rightSprite.setScale(1, .4)
     this.add(this.rightSprite);
+    this.mouseControl = true;
 
     this.width = 150;
     this.height = 50;
@@ -35,23 +36,69 @@ class Paddle extends Entity {
     const MAX_SPEED = 15;
 
     if (!demoMode) {
-      try {
-        scene.events.on('update', () => {
-          if (!this?.body?.position) {
-            return;
-          }
+      // Setup keyboard keys
+      this.cursors = scene.input.keyboard.createCursorKeys();
+      this.keyA = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+      this.keyD = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+
+      // Track control mode
+      this.controlMode = "mouse"; // "mouse" or "keyboard"
+
+      // Switch back to mouse when player moves mouse
+      scene.input.on("pointermove", () => {
+        this.controlMode = "mouse";
+      });
+
+      // Switch to keyboard when arrow/A/D pressed
+      scene.input.keyboard.on("keydown", (event) => {
+        if (
+          event.code === "ArrowLeft" ||
+          event.code === "ArrowRight" ||
+          event.code === "KeyA" ||
+          event.code === "KeyD"
+        ) {
+          this.controlMode = "keyboard";
+        }
+        if ((event.code === "KeyW" || event.code === "ArrowUp") && this.hasBall) {
+          this.hasBall = false;
+          this.fakeBall.destroy();
+          new Ball(this.body.position.x, this.body.position.y - 20);
+        }
+      });
+
+      scene.events.on("update", () => {
+        if (!this?.body?.position) return;
+
+        const halfWidth = this.width / 2;
+        let currentX = this.body.position.x;
+        let moveX = 0;
+
+        if (this.controlMode === "mouse") {
           const pointer = scene.input.activePointer;
-          const halfWidth = this.width / 2;
           let targetX = Phaser.Math.Clamp(pointer.x, halfWidth, GAME_WIDTH - halfWidth);
-          let currentX = this.body.position.x;
           let dx = targetX - currentX;
-          let moveX = Math.min(Math.abs(dx), MAX_SPEED) * Math.sign(dx);
-          scene.matter.body.setPosition(this.body, { x: currentX + moveX, y: y + 20 });
+          moveX = Math.min(Math.abs(dx), MAX_SPEED) * Math.sign(dx);
+        } else if (this.controlMode === "keyboard") {
+          if (this.cursors.left.isDown || this.keyA.isDown) {
+            moveX = -MAX_SPEED;
+          } else if (this.cursors.right.isDown || this.keyD.isDown) {
+            moveX = MAX_SPEED;
+          }
+        }
+
+        // Apply movement
+        if (moveX !== 0) {
+          scene.matter.body.setPosition(this.body, {
+            x: Phaser.Math.Clamp(currentX + moveX, halfWidth, GAME_WIDTH - halfWidth),
+            y: y + 20,
+          });
           this.setPosition(this.body.position.x, this.body.position.y);
-          this.checkPortals();
-        });
-      } catch (error) {}
-      scene.input.on('pointerdown', () => {
+        }
+
+        this.checkPortals();
+      });
+
+      scene.input.on("pointerdown", () => {
         if (this.hasBall) {
           this.hasBall = false;
           this.fakeBall.destroy();

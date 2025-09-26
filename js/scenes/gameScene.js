@@ -32,7 +32,7 @@ let gameScene = new Phaser.Class({
         const labels = [bodyA.label, bodyB.label];
         if (labels.includes('ball') && labels.includes('block')) {
           let blockBody = labels[0] === 'block' ? bodyA : bodyB;     
-          if (!blockBody || !blockBody.gameObject) {return}
+          if (!blockBody || !blockBody.gameObject || blockBody.gameObject.dieing) {return}
           blockBody.gameObject.hit();
         }
           

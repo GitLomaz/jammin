@@ -4,6 +4,7 @@ class Block extends Entity {
     this.health = 3;
     this.score = 100;
     this.breakable = true;
+    this.dieing = false;
     scene.blocks.add(this);
   }
 

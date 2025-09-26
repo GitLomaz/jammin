@@ -70,6 +70,9 @@ function generateLevel(jsonData, title = false) {
         case 8:
           new IronBlock(xMargin + j * xSpacing, yMargin + i * ySpacing);
           break;
+        case 12:
+          new BombBlock(xMargin + j * xSpacing, yMargin + i * ySpacing);
+          break;
       }
     }
   }
