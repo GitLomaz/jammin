@@ -49,19 +49,31 @@ class PowerUp extends Entity {
         });
         break;
       case 1:
+        if (scene.puHotBar) {
+          scene.puHotBar.destroy()
+        }
+        scene.puHotBar = new HotBar()
         balls.each(ball => {
           ball.sprite.body.hot = true
           ball.setHot()
         });
         break;
       case 2:
-          // paddle
+        if (scene.puPaddleBar) {
+          scene.puPaddleBar.complete()
+        }
+        scene.puPaddleBar = new PaddleBar()
+        scene.paddle.setMode(1)
         break;
       case 3:
         generatePortals()
         break;
       case 4:
-        // gun
+        if (scene.puPaddleBar) {
+          scene.puPaddleBar.complete()
+        }
+        scene.puPaddleBar = new PaddleBar(false)
+        scene.paddle.setMode(2)
         break;
       case 5:
         stats.lives++;

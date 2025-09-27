@@ -23,9 +23,12 @@ let titleScene = new Phaser.Class({
     this.load.image('pu_2', 'images/pu_2.png');
     this.load.image('pu_3', 'images/pu_3.png');
     this.load.image('pu_4', 'images/pu_4.png');
+    this.load.image('pu_5', 'images/pu_5.png');
     this.load.image('paddleLeft', 'images/paddleLeft.png');
+    this.load.image('paddleLeftLaser', 'images/paddleLeftLaser.png');
     this.load.image('paddleMiddle', 'images/paddleMiddle.png');
     this.load.image('paddleRight', 'images/paddleRight.png');
+    this.load.image('paddleRightLaser', 'images/paddleRightLaser.png');
     this.load.image('iron', 'images/iron.png');
     this.load.image('ironLeft', 'images/ironLeft.png');
     this.load.image('ironRight', 'images/ironRight.png');

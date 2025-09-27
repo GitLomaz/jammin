@@ -6,6 +6,7 @@ class Laser extends Entity {
     this.speed = 10;
     this.direction = direction;
     this.destroyed = false;
+    this.paddleLaser = paddleLaser
     scene.lasers.add(this);
 
     this.sprite = scene.matter.add.image(x, y, "laser", null, {

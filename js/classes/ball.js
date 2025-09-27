@@ -62,6 +62,12 @@ class Ball extends Entity {
       this.sprite.destroy();
       scene.balls.remove(this);
       if (scene.balls.getChildren().length === 0) {
+        if (scene.puHotBar) {
+          scene.puHotBar.complete()
+        }
+        if (scene.puPaddleBar) {
+          scene.puPaddleBar.complete()
+        }
         stats.lives--;
         scene.ui.updateLives(stats.lives);
         if (stats.lives > 0) {

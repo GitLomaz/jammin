@@ -41,6 +41,9 @@ let gameScene = new Phaser.Class({
       music.play();
     }
 
+    this.puHotBar = false
+    this.puPaddleBar = false
+
     this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'bg').setAlpha(0.6);
     this.ui = new Game();
     this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'gameFrame');
@@ -105,6 +108,7 @@ let gameScene = new Phaser.Class({
     this.balls.children.each((ball) => ball.update());
     this.portals.children.each((portal) => portal.update());
     this.powerUps.children.each((pu) => pu.update());
+
     let anyBreakableLeft = false;
     this.blocks.children.each((block) => {
       if (block.breakable) {

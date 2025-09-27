@@ -11,6 +11,7 @@ class Paddle extends Entity {
     this.rightSprite.setScale(1, .4)
     this.add(this.rightSprite);
     this.mouseControl = true;
+    this.mode = 0;
 
     this.width = 150;
     this.height = 50;
@@ -26,6 +27,7 @@ class Paddle extends Entity {
     });
 
     this.body.label = "paddle";
+    this.currentScale = 1
 
     scene.matter.add.gameObject(this, this.body);
     scene.add.existing(this);
@@ -137,6 +139,44 @@ class Paddle extends Entity {
       this.hasBall = false;
       this.fakeBall.destroy();
       new Ball(this.body.position.x, this.body.position.y - 20);
+    }
+  }
+
+  setMode(mode = 0) {   
+    this.mode = mode
+    if (mode === 0) {
+      this.leftSprite.x = -50
+      this.leftSprite.y = -20
+      this.rightSprite.x = 50
+      this.rightSprite.y = -20
+      this.leftSprite.setTexture("paddleLeft")
+      this.rightSprite.setTexture("paddleRight")
+      this.middleSprite.setScale(1, .4)
+      let factor = 1 / this.currentScale;
+      scene.matter.body.scale(scene.paddle.body, factor, 1);
+      this.currentScale = 1
+    } else if (mode === 1) {
+      this.leftSprite.x = -100
+      this.leftSprite.y = -20
+      this.rightSprite.x = 100
+      this.rightSprite.y = -20
+      this.leftSprite.setTexture("paddleLeft")
+      this.rightSprite.setTexture("paddleRight")
+      this.middleSprite.setScale(3, .4)    
+      let factor = 1.6 / this.currentScale;
+      scene.matter.body.scale(scene.paddle.body, factor, 1); 
+      this.currentScale = 1.6
+    } else if (mode === 2) {
+      this.leftSprite.x = -50
+      this.leftSprite.y = -25
+      this.rightSprite.x = 50
+      this.rightSprite.y = -25
+      this.leftSprite.setTexture("paddleLeftLaser")
+      this.rightSprite.setTexture("paddleRightLaser")
+      this.middleSprite.setScale(1, .4)
+      let factor = 1 / this.currentScale;
+      scene.matter.body.scale(scene.paddle.body, factor, 1);  
+      this.currentScale = 1
     }
   }
 }
