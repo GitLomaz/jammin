@@ -1,20 +1,23 @@
 class Paddle extends Entity {
   constructor(x, y, demoMode = false) {
     super(x, y);
+
+    this.PADDLE_MARGIN = 30; // Minimum distance from edges
     this.leftSprite = scene.add.image(-50, -20, "paddleLeft");
-    this.leftSprite.setScale(1, .4)
+    this.leftSprite.setScale(1, 0.4);
     this.add(this.leftSprite);
+
     this.middleSprite = scene.add.image(0, -20, "paddleMiddle");
-    this.middleSprite.setScale(1, .4)
+    this.middleSprite.setScale(1, 0.4);
     this.add(this.middleSprite);
+
     this.rightSprite = scene.add.image(50, -20, "paddleRight");
-    this.rightSprite.setScale(1, .4)
+    this.rightSprite.setScale(1, 0.4);
     this.add(this.rightSprite);
+
     this.mouseControl = true;
     this.mode = 0;
-
-    this.armed = true
-
+    this.armed = true;
     this.width = 150;
     this.height = 50;
     this.demoMode = demoMode;
@@ -27,9 +30,8 @@ class Paddle extends Entity {
       friction: 0,
       isStatic: true
     });
-
     this.body.label = "paddle";
-    this.currentScale = 1
+    this.currentScale = 1;
 
     scene.matter.add.gameObject(this, this.body);
     scene.add.existing(this);
@@ -37,31 +39,25 @@ class Paddle extends Entity {
     const MAX_SPEED = 15;
 
     if (!demoMode) {
-      // Setup keyboard keys
+      // Keyboard setup
       this.cursors = scene.input.keyboard.createCursorKeys();
       this.keyA = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
       this.keyD = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
-      // Track control mode
-      this.controlMode = "mouse"; // "mouse" or "keyboard"
+      this.controlMode = "mouse";
 
-      // Switch back to mouse when player moves mouse
+      // Switch to mouse control
       scene.input.on("pointermove", () => {
         this.controlMode = "mouse";
       });
 
-      // Switch to keyboard when arrow/A/D pressed
+      // Switch to keyboard control
       scene.input.keyboard.on("keydown", (event) => {
-        if (
-          event.code === "ArrowLeft" ||
-          event.code === "ArrowRight" ||
-          event.code === "KeyA" ||
-          event.code === "KeyD"
-        ) {
+        if (["ArrowLeft", "ArrowRight", "KeyA", "KeyD"].includes(event.code)) {
           this.controlMode = "keyboard";
         }
-        if ((event.code === "KeyW" || event.code === "ArrowUp")) {
-          this.action() 
+        if (event.code === "KeyW" || event.code === "ArrowUp") {
+          this.action();
         }
       });
 
@@ -74,22 +70,26 @@ class Paddle extends Entity {
 
         if (this.controlMode === "mouse") {
           const pointer = scene.input.activePointer;
-          let targetX = Phaser.Math.Clamp(pointer.x, halfWidth, GAME_WIDTH - halfWidth);
+          let targetX = Phaser.Math.Clamp(
+            pointer.x,
+            halfWidth + this.PADDLE_MARGIN,
+            GAME_WIDTH - halfWidth - this.PADDLE_MARGIN
+          );
           let dx = targetX - currentX;
           moveX = Math.min(Math.abs(dx), MAX_SPEED) * Math.sign(dx);
         } else if (this.controlMode === "keyboard") {
-          if (this.cursors.left.isDown || this.keyA.isDown) {
-            moveX = -MAX_SPEED;
-          } else if (this.cursors.right.isDown || this.keyD.isDown) {
-            moveX = MAX_SPEED;
-          }
+          if (this.cursors.left.isDown || this.keyA.isDown) moveX = -MAX_SPEED;
+          else if (this.cursors.right.isDown || this.keyD.isDown) moveX = MAX_SPEED;
         }
 
-        // Apply movement
         if (moveX !== 0) {
           scene.matter.body.setPosition(this.body, {
-            x: Phaser.Math.Clamp(currentX + moveX, halfWidth, GAME_WIDTH - halfWidth),
-            y: y + 20,
+            x: Phaser.Math.Clamp(
+              currentX + moveX,
+              halfWidth + this.PADDLE_MARGIN,
+              GAME_WIDTH - halfWidth - this.PADDLE_MARGIN
+            ),
+            y: y + 20
           });
           this.setPosition(this.body.position.x, this.body.position.y);
         }
@@ -102,11 +102,12 @@ class Paddle extends Entity {
   }
 
   checkPortals() {
-    if (scene.portals.getChildren().length === 0) {return}
-    if (this.body.bounds.min.x < 30) {
+    if (scene.portals.getChildren().length === 0) return;
+
+    if (this.body.bounds.min.x < this.PADDLE_MARGIN) {
       stats.currentLevel[0]++;
       scene.scene.restart();
-    } else if (this.body.bounds.max.x > GAME_WIDTH - 30) {
+    } else if (this.body.bounds.max.x > GAME_WIDTH - this.PADDLE_MARGIN) {
       stats.currentLevel[0]++;
       stats.currentLevel[1]++;
       scene.scene.restart();
@@ -115,17 +116,17 @@ class Paddle extends Entity {
 
   update() {
     if (this.demoMode) {
-      const leftBound = this.width / 2 + 30;
-      const rightBound = GAME_WIDTH - this.width / 2 - 30;
+      const leftBound = this.width / 2 + this.PADDLE_MARGIN;
+      const rightBound = GAME_WIDTH - this.width / 2 - this.PADDLE_MARGIN;
       let targetX = this.demoMode.sprite.x;
       if (targetX < leftBound) targetX = leftBound;
       if (targetX > rightBound) targetX = rightBound;
-      this.setPosition(targetX , this.body.position.y);
+      this.setPosition(targetX, this.body.position.y);
     }
   }
 
   spawnBall() {
-    this.hasBall = true
+    this.hasBall = true;
     this.fakeBall = scene.add.image(0, -40, "ball");
     this.add(this.fakeBall);
   }
@@ -136,51 +137,59 @@ class Paddle extends Entity {
       this.fakeBall.destroy();
       new Ball(this.body.position.x, this.body.position.y - 20);
     }
+
     if (this.mode === 2 && this.armed) {
-      this.armed = false
-      new PaddleLaser(this.x - 40, this.y - 50)
-      new PaddleLaser(this.x + 40, this.y - 50)
+      this.armed = false;
+      new PaddleLaser(this.x - 40, this.y - 50);
+      new PaddleLaser(this.x + 40, this.y - 50);
       scene.time.delayedCall(150, () => {
         this.armed = true;
       });
     }
   }
 
-  setMode(mode = 0) {   
-    this.mode = mode
+  setMode(mode = 0) {
+    this.mode = mode;
+
     if (mode === 0) {
-      this.leftSprite.x = -50
-      this.leftSprite.y = -20
-      this.rightSprite.x = 50
-      this.rightSprite.y = -20
-      this.leftSprite.setTexture("paddleLeft")
-      this.rightSprite.setTexture("paddleRight")
-      this.middleSprite.setScale(1, .4)
+      this.PADDLE_MARGIN = 30;
+      this.leftSprite.x = -50;
+      this.leftSprite.y = -20;
+      this.rightSprite.x = 50;
+      this.rightSprite.y = -20;
+      this.leftSprite.setTexture("paddleLeft");
+      this.rightSprite.setTexture("paddleRight");
+      this.middleSprite.setScale(1, 0.4);
+
       let factor = 1 / this.currentScale;
-      scene.matter.body.scale(scene.paddle.body, factor, 1);
-      this.currentScale = 1
+      scene.matter.body.scale(this.body, factor, 1);
+      this.currentScale = 1;
     } else if (mode === 1) {
-      this.leftSprite.x = -100
-      this.leftSprite.y = -20
-      this.rightSprite.x = 100
-      this.rightSprite.y = -20
-      this.leftSprite.setTexture("paddleLeft")
-      this.rightSprite.setTexture("paddleRight")
-      this.middleSprite.setScale(3, .4)    
+      this.PADDLE_MARGIN = 80;
+      this.leftSprite.x = -100;
+      this.leftSprite.y = -20;
+      this.rightSprite.x = 100;
+      this.rightSprite.y = -20;
+      this.leftSprite.setTexture("paddleLeft");
+      this.rightSprite.setTexture("paddleRight");
+      this.middleSprite.setScale(3, 0.4);
+
       let factor = 1.6 / this.currentScale;
-      scene.matter.body.scale(scene.paddle.body, factor, 1); 
-      this.currentScale = 1.6
+      scene.matter.body.scale(this.body, factor, 1);
+      this.currentScale = 1.6;
     } else if (mode === 2) {
-      this.leftSprite.x = -50
-      this.leftSprite.y = -25
-      this.rightSprite.x = 50
-      this.rightSprite.y = -25
-      this.leftSprite.setTexture("paddleLeftLaser")
-      this.rightSprite.setTexture("paddleRightLaser")
-      this.middleSprite.setScale(1, .4)
+      this.PADDLE_MARGIN = 30;
+      this.leftSprite.x = -50;
+      this.leftSprite.y = -25;
+      this.rightSprite.x = 50;
+      this.rightSprite.y = -25;
+      this.leftSprite.setTexture("paddleLeftLaser");
+      this.rightSprite.setTexture("paddleRightLaser");
+      this.middleSprite.setScale(1, 0.4);
+
       let factor = 1 / this.currentScale;
-      scene.matter.body.scale(scene.paddle.body, factor, 1);  
-      this.currentScale = 1
+      scene.matter.body.scale(this.body, factor, 1);
+      this.currentScale = 1;
     }
   }
 }
