@@ -20,7 +20,9 @@ class HotBar extends Entity {
   }
 
   complete() {
-    this.tween.stop();
+    if (this.tween !== null) {
+      this.tween.stop();
+    }
     this.tween = null;
     scene.balls.children.each(ball => {
       ball.sprite.body.hot = false

@@ -20,7 +20,9 @@ class PaddleBar extends Entity {
   }
 
   complete() {
-    this.tween.stop();
+    if (this.tween !== null) {
+      this.tween.stop();
+    }
     this.tween = null;
     scene.paddle.setMode()
     this.destroy()

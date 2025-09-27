@@ -2,7 +2,7 @@ class Paddle extends Entity {
   constructor(x, y, demoMode = false) {
     super(x, y);
 
-    this.PADDLE_MARGIN = 25; // Minimum distance from edges
+    this.PADDLE_MARGIN = 30; // Minimum distance from edges
     this.leftSprite = scene.add.image(-50, -20, "paddleLeft");
     this.leftSprite.setScale(1, 0.4);
     this.add(this.leftSprite);
@@ -74,8 +74,8 @@ class Paddle extends Entity {
           const pointer = scene.input.activePointer;
           let targetX = Phaser.Math.Clamp(
             pointer.x,
-            halfWidth + this.PADDLE_MARGIN,
-            GAME_WIDTH - halfWidth - this.PADDLE_MARGIN
+            halfWidth + (scene.portals.getChildren().length === 0 ? this.PADDLE_MARGIN : 0),
+            GAME_WIDTH - halfWidth - (scene.portals.getChildren().length === 0 ? this.PADDLE_MARGIN : 0)
           );
           let dx = targetX - currentX;
           moveX = Math.min(Math.abs(dx), MAX_SPEED) * Math.sign(dx);
@@ -88,8 +88,8 @@ class Paddle extends Entity {
           scene.matter.body.setPosition(this.body, {
             x: Phaser.Math.Clamp(
               currentX + moveX,
-              halfWidth + this.PADDLE_MARGIN,
-              GAME_WIDTH - halfWidth - this.PADDLE_MARGIN
+              halfWidth + (scene.portals.getChildren().length === 0 ? this.PADDLE_MARGIN : 0),
+              GAME_WIDTH - halfWidth - (scene.portals.getChildren().length === 0 ? this.PADDLE_MARGIN : 0)
             ),
             y: y + 20
           });
@@ -154,7 +154,7 @@ class Paddle extends Entity {
     this.mode = mode;
 
     if (mode === 0) {
-      this.PADDLE_MARGIN = 25;
+      this.PADDLE_MARGIN = 30;
       this.leftSprite.x = -50;
       this.leftSprite.y = -20;
       this.rightSprite.x = 50;
@@ -167,7 +167,7 @@ class Paddle extends Entity {
       scene.matter.body.scale(this.body, factor, 1);
       this.currentScale = 1;
     } else if (mode === 1) {
-      this.PADDLE_MARGIN = 75;
+      this.PADDLE_MARGIN = 80;
       this.leftSprite.x = -100;
       this.leftSprite.y = -20;
       this.rightSprite.x = 100;
@@ -180,7 +180,7 @@ class Paddle extends Entity {
       scene.matter.body.scale(this.body, factor, 1);
       this.currentScale = 1.6;
     } else if (mode === 2) {
-      this.PADDLE_MARGIN = 25;
+      this.PADDLE_MARGIN = 30;
       this.leftSprite.x = -50;
       this.leftSprite.y = -25;
       this.rightSprite.x = 50;
