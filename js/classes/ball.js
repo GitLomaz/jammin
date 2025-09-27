@@ -73,6 +73,7 @@ class Ball extends Entity {
   }
   
   split() {
+    if (scene.balls.getChildren().length > 50) {return}
     const ball2 = new Ball(this.sprite.x, this.sprite.y);
     ball2.setVelocity(-this.sprite.body.velocity.x, this.sprite.body.velocity.y);
     const ball3 = new Ball(this.sprite.x, this.sprite.y);

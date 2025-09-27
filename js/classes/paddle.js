@@ -19,6 +19,7 @@ class Paddle extends Entity {
     this.hasBall = !demoMode;
     if (this.hasBall) {
       this.fakeBall = scene.add.image(0, -40, "ball");
+      this.fakeBall.setScale(.1)
       this.add(this.fakeBall);
     }
 
@@ -135,6 +136,7 @@ class Paddle extends Entity {
     this.hasBall = true;
     if (this.hasBall) {
       this.fakeBall = scene.add.image(0, -40, "ball");
+      this.fakeBall.setScale(.1)
       this.add(this.fakeBall);
     }
   }

@@ -8,6 +8,7 @@ class PowerUp extends Entity {
     // 2: paddle
     // 3: portal
     // 4: gun
+    // 5: life
 
     this.sprite = scene.matter.add.image(0, 0, "pu_" + type, null, {
       label: "powerup",
@@ -43,7 +44,7 @@ class PowerUp extends Entity {
     const balls = scene.balls.children
     switch (this.type) {
       case 0:
-        balls.each(ball => {
+        balls.each(ball => { 
           ball.split()
         });
         break;
@@ -60,6 +61,14 @@ class PowerUp extends Entity {
         break;
       case 4:
         // gun
+        break;
+      case 5:
+        // life
+        stats.lives++;
+        if (stats.lives > 5) {
+          stats.lives = 5
+        }
+        scene.ui.updateLives(stats.lives);
         break;
     
       default:

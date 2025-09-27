@@ -17,27 +17,8 @@ class BombBlock extends Block {
   }
 
   die() {
-    stats.score += this.score;
-    if (scene.ui?.updateScore) {
-      scene.ui.updateScore(stats.score);
-    }
-
-if (scene.gamePlay) {    
-if (Random.oneIn(20)) {
-      new PowerUp(this.x, this.y, 0) // Multiball
-    } else if (Random.oneIn(20)) {
-      new PowerUp(this.x, this.y, 1) // fire
-    } else if (Random.oneIn(20)) {
-      new PowerUp(this.x, this.y, 1) // paddle
-    } else if (Random.oneIn(100)) {
-      new PowerUp(this.x, this.y, 1) // portal
-    } else if (Random.oneIn(40)) {
-      new PowerUp(this.x, this.y, 1) // gun
-    }
-}
-
+    super.die()
     const sourceBlock = this
-
     if (this.armed) {
       this.armed = false;
       const circle = scene.add.circle(
@@ -66,23 +47,12 @@ if (Random.oneIn(20)) {
             const dx = sprite.body.position.x - circle.x;
             const dy = sprite.body.position.y - circle.y;
             if (dx * dx + dy * dy <= circle.radius * circle.radius) {
-              console.log(block)
               block.die();
             }
           });
         },
         onComplete: () => {
           circle.destroy();
-        }
-      });
-      scene.tweens.add({
-        targets: this.sprite,
-        scaleX: 0,
-        scaleY: 0,
-        duration: 100,
-        onComplete: () => {
-          this.sprite.destroy();
-          scene.blocks.remove(this);
         }
       });
     };

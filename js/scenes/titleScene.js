@@ -13,7 +13,8 @@ let titleScene = new Phaser.Class({
   },
 
   preload: function () {
-    this.load.image('ball', 'images/hotBall.png');
+    this.load.image('ball', 'images/ball.png');
+    this.load.image('hotBall', 'images/hotBall.png');
     this.load.image('leaf1', 'images/leaf1.png');
     this.load.image('leaf2', 'images/leaf2.png');
     this.load.image('leaf3', 'images/leaf3.png');
