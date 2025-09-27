@@ -98,6 +98,16 @@ let gameScene = new Phaser.Class({
             laserBody.gameObject.die();
           }
         }
+          
+        // paddle laser
+        if (labels.includes('paddleLaser') && labels.includes('block')) {
+          let blockBody = labels[0] === 'block' ? bodyA : bodyB;     
+          let laserBody = labels[0] === 'paddleLaser' ? bodyA : bodyB;     
+          if (!blockBody || !blockBody.gameObject || blockBody.gameObject.dieing) {return}
+          if (!laserBody || !laserBody.gameObject || laserBody.gameObject.dieing) {return}
+          blockBody.gameObject.hit();
+          laserBody.gameObject.die();
+        }
       });
     });
   },  

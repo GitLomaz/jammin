@@ -40,7 +40,7 @@ class PowerUp extends Entity {
   }
 
   collect() {
-    scene.paddle.launchBall()
+    scene.paddle.action()
     const balls = scene.balls.children
     switch (this.type) {
       case 0:
@@ -50,7 +50,7 @@ class PowerUp extends Entity {
         break;
       case 1:
         if (scene.puHotBar) {
-          scene.puHotBar.destroy()
+          scene.puHotBar.complete()
         }
         scene.puHotBar = new HotBar()
         balls.each(ball => {

@@ -13,6 +13,8 @@ class Paddle extends Entity {
     this.mouseControl = true;
     this.mode = 0;
 
+    this.armed = true
+
     this.width = 150;
     this.height = 50;
     this.demoMode = demoMode;
@@ -58,8 +60,8 @@ class Paddle extends Entity {
         ) {
           this.controlMode = "keyboard";
         }
-        if ((event.code === "KeyW" || event.code === "ArrowUp") && this.hasBall) {
-          this.launchBall() 
+        if ((event.code === "KeyW" || event.code === "ArrowUp")) {
+          this.action() 
         }
       });
 
@@ -95,13 +97,7 @@ class Paddle extends Entity {
         this.checkPortals();
       });
 
-      scene.input.on("pointerdown", () => {
-        if (this.hasBall) {
-          this.hasBall = false;
-          this.fakeBall.destroy();
-          new Ball(this.body.position.x, this.body.position.y - 20);
-        }
-      });
+      scene.input.on("pointerdown", this.action.bind(this));
     }
   }
 
@@ -134,11 +130,19 @@ class Paddle extends Entity {
     this.add(this.fakeBall);
   }
 
-  launchBall() {
+  action() {
     if (this.hasBall) {
       this.hasBall = false;
       this.fakeBall.destroy();
       new Ball(this.body.position.x, this.body.position.y - 20);
+    }
+    if (this.mode === 2 && this.armed) {
+      this.armed = false
+      new PaddleLaser(this.x - 40, this.y - 50)
+      new PaddleLaser(this.x + 40, this.y - 50)
+      scene.time.delayedCall(150, () => {
+        this.armed = true;
+      });
     }
   }
 

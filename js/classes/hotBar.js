@@ -8,7 +8,7 @@ class HotBar extends Entity {
     this.add(this.rect);
     this.rect.setOrigin(0, 0.5);
 
-    scene.tweens.add({
+    this.tween = scene.tweens.add({
       targets: this.rect,
       scaleX: 0,
       duration: 15000,
@@ -20,6 +20,8 @@ class HotBar extends Entity {
   }
 
   complete() {
+    this.tween.stop();
+    this.tween = null;
     scene.balls.children.each(ball => {
       ball.sprite.body.hot = false
       ball.setHot()

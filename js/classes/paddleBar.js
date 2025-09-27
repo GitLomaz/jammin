@@ -1,6 +1,6 @@
 class PaddleBar extends Entity {
   constructor(extend = true) {
-    super(510, 44);
+    super(540, 44);
     this.maxWidth = 250;
     this.maxHeight = 6;
 
@@ -8,18 +8,20 @@ class PaddleBar extends Entity {
     this.add(this.rect);
     this.rect.setOrigin(1, 0.5);
 
-    scene.tweens.add({
+    this.tween = scene.tweens.add({
       targets: this.rect,
       scaleX: 0,
       duration: extend ? 60000 : 15000,
       onComplete: () => {
-        this.complete()
+      this.complete()
       }
     });
     scene.add.existing(this)
   }
 
   complete() {
+    this.tween.stop();
+    this.tween = null;
     scene.paddle.setMode()
     this.destroy()
   }
