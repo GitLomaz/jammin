@@ -1,5 +1,5 @@
 class Ball extends Entity {
-  constructor(x, y) {
+  constructor(x, y, hot = false) {
     super(x, y);
 
     this.radius = 10;
@@ -10,7 +10,7 @@ class Ball extends Entity {
     this.sprite.setCircle(this.radius);
     this.sprite.body.label = "ball";
 
-    this.sprite.body.fire = true
+    this.sprite.body.hot = hot
 
     // physics settings
     this.sprite.setBounce(1);           // full energy on bounce
@@ -21,6 +21,7 @@ class Ball extends Entity {
     // give initial push
     this.setVelocity(Phaser.Math.Between(-this.speed, this.speed), -this.speed);
     scene.balls.add(this);
+    this.setHot();
   }
 
   setVelocity(vx, vy) {
@@ -74,9 +75,13 @@ class Ball extends Entity {
   
   split() {
     if (scene.balls.getChildren().length > 50) {return}
-    const ball2 = new Ball(this.sprite.x, this.sprite.y);
+    const ball2 = new Ball(this.sprite.x, this.sprite.y, this.sprite.body.hot);
     ball2.setVelocity(-this.sprite.body.velocity.x, this.sprite.body.velocity.y);
-    const ball3 = new Ball(this.sprite.x, this.sprite.y);
+    const ball3 = new Ball(this.sprite.x, this.sprite.y, this.sprite.body.hot);
     ball3.setVelocity(this.sprite.body.velocity.x, -this.sprite.body.velocity.y);
+  }
+
+  setHot() {
+    this.sprite.setTexture(this.sprite.body.hot ? 'hotBall' : 'ball');
   }
 }

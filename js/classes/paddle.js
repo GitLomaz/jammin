@@ -17,11 +17,7 @@ class Paddle extends Entity {
     this.demoMode = demoMode;
 
     this.hasBall = !demoMode;
-    if (this.hasBall) {
-      this.fakeBall = scene.add.image(0, -40, "ball");
-      this.fakeBall.setScale(.1)
-      this.add(this.fakeBall);
-    }
+    this.spawnBall();
 
     this.body = scene.matter.add.rectangle(x, y + 20, this.width, this.height, {
       restitution: 0,
@@ -61,9 +57,7 @@ class Paddle extends Entity {
           this.controlMode = "keyboard";
         }
         if ((event.code === "KeyW" || event.code === "ArrowUp") && this.hasBall) {
-          this.hasBall = false;
-          this.fakeBall.destroy();
-          new Ball(this.body.position.x, this.body.position.y - 20);
+          this.launchBall() 
         }
       });
 
@@ -133,11 +127,16 @@ class Paddle extends Entity {
   }
 
   spawnBall() {
-    this.hasBall = true;
+    this.hasBall = true
+    this.fakeBall = scene.add.image(0, -40, "ball");
+    this.add(this.fakeBall);
+  }
+
+  launchBall() {
     if (this.hasBall) {
-      this.fakeBall = scene.add.image(0, -40, "ball");
-      this.fakeBall.setScale(.1)
-      this.add(this.fakeBall);
+      this.hasBall = false;
+      this.fakeBall.destroy();
+      new Ball(this.body.position.x, this.body.position.y - 20);
     }
   }
 }

@@ -40,7 +40,7 @@ class PowerUp extends Entity {
   }
 
   collect() {
-    
+    scene.paddle.launchBall()
     const balls = scene.balls.children
     switch (this.type) {
       case 0:
@@ -50,7 +50,8 @@ class PowerUp extends Entity {
         break;
       case 1:
         balls.each(ball => {
-          // ball.split()
+          ball.sprite.body.hot = true
+          ball.setHot()
         });
         break;
       case 2:
@@ -63,7 +64,6 @@ class PowerUp extends Entity {
         // gun
         break;
       case 5:
-        // life
         stats.lives++;
         if (stats.lives > 5) {
           stats.lives = 5

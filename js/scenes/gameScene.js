@@ -57,11 +57,11 @@ let gameScene = new Phaser.Class({
         if (labels.includes('ball') && labels.includes('block')) {
           let blockBody = labels[0] === 'block' ? bodyA : bodyB;     
           let ballBody = labels[0] === 'ball' ? bodyA : bodyB;     
-          if (ballBody.fire) {
+          if (ballBody.hot) {
             pair.isActive = false
           }
           if (!blockBody || !blockBody.gameObject || blockBody.gameObject.dieing) { return }
-          if (ballBody.fire) {
+          if (ballBody.hot) {
             blockBody.gameObject.die();
           } else {
             blockBody.gameObject.hit();

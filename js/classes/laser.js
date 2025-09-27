@@ -46,7 +46,6 @@ class Laser extends Entity {
         break;
     }
 
-    // Destroy if out of bounds
     if (
       this.sprite.y < 0 ||
       this.sprite.y > GAME_HEIGHT ||
