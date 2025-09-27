@@ -2,7 +2,7 @@ class Paddle extends Entity {
   constructor(x, y, demoMode = false) {
     super(x, y);
 
-    this.PADDLE_MARGIN = 30; // Minimum distance from edges
+    this.PADDLE_MARGIN = 25; // Minimum distance from edges
     this.leftSprite = scene.add.image(-50, -20, "paddleLeft");
     this.leftSprite.setScale(1, 0.4);
     this.add(this.leftSprite);
@@ -25,7 +25,7 @@ class Paddle extends Entity {
     this.hasBall = !demoMode;
     this.spawnBall();
 
-    this.body = scene.matter.add.rectangle(x, y + 20, this.width, this.height, {
+    this.body = scene.matter.add.rectangle(x, y + 20, this.width, 40, {
       restitution: 0,
       friction: 0,
       isStatic: true
@@ -152,7 +152,7 @@ class Paddle extends Entity {
     this.mode = mode;
 
     if (mode === 0) {
-      this.PADDLE_MARGIN = 30;
+      this.PADDLE_MARGIN = 25;
       this.leftSprite.x = -50;
       this.leftSprite.y = -20;
       this.rightSprite.x = 50;
@@ -165,7 +165,7 @@ class Paddle extends Entity {
       scene.matter.body.scale(this.body, factor, 1);
       this.currentScale = 1;
     } else if (mode === 1) {
-      this.PADDLE_MARGIN = 80;
+      this.PADDLE_MARGIN = 75;
       this.leftSprite.x = -100;
       this.leftSprite.y = -20;
       this.rightSprite.x = 100;
@@ -178,7 +178,7 @@ class Paddle extends Entity {
       scene.matter.body.scale(this.body, factor, 1);
       this.currentScale = 1.6;
     } else if (mode === 2) {
-      this.PADDLE_MARGIN = 30;
+      this.PADDLE_MARGIN = 25;
       this.leftSprite.x = -50;
       this.leftSprite.y = -25;
       this.rightSprite.x = 50;
