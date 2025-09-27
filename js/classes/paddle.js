@@ -23,7 +23,9 @@ class Paddle extends Entity {
     this.demoMode = demoMode;
 
     this.hasBall = !demoMode;
-    this.spawnBall();
+    if (!demoMode) {
+      this.spawnBall();
+    }
 
     this.body = scene.matter.add.rectangle(x, y + 20, this.width, 40, {
       restitution: 0,

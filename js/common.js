@@ -10,7 +10,7 @@ function drawBoundaries(title = false) {
     borderWidth / 2 + (title ? 0 : 60),
     GAME_WIDTH,
     borderWidth,
-    { ...options, label: 'top_wall' }
+    { ...options, label: 'wall' }
   );
 
   // Left boundary
@@ -19,7 +19,7 @@ function drawBoundaries(title = false) {
     GAME_HEIGHT / 2,
     borderWidth,
     GAME_HEIGHT,
-    { ...options, label: 'left_wall' }
+    { ...options, label: 'wall' }
   );
 
   // Right boundary
@@ -28,7 +28,7 @@ function drawBoundaries(title = false) {
     GAME_HEIGHT / 2,
     borderWidth,
     GAME_HEIGHT,
-    { ...options, label: 'right_wall' }
+    { ...options, label: 'wall' }
   );
 }
 

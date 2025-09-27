@@ -108,6 +108,20 @@ let gameScene = new Phaser.Class({
           blockBody.gameObject.hit();
           laserBody.gameObject.die();
         }
+          
+        // paddle laser
+        if (labels.includes('paddleLaser') && labels.includes('wall')) {
+          let laserBody = labels[0] === 'paddleLaser' ? bodyA : bodyB;     
+          if (!laserBody || !laserBody.gameObject || laserBody.gameObject.dieing) {return}
+          laserBody.gameObject.die();
+        }
+          
+        // laser
+        if (labels.includes('laser') && labels.includes('wall')) {
+          let laserBody = labels[0] === 'laser' ? bodyA : bodyB;     
+          if (!laserBody || !laserBody.gameObject || laserBody.gameObject.dieing) {return}
+          laserBody.gameObject.die();
+        }
       });
     });
   },  
