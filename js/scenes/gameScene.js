@@ -12,11 +12,13 @@ let gameScene = new Phaser.Class({
 
   create: function () {
     scene = this;
+    this.gamePlay = true
     jsonData = this.cache.json.get('level' + JSON.stringify(stats.currentLevel));
     this.blocks = this.add.group();
     this.balls = this.add.group();
     this.portals = this.add.group();
     this.lasers = this.add.group();
+    this.powerUps = this.add.group();
 
     this.sounds = [];
     this.sound.pauseOnBlur = false;
@@ -54,14 +56,16 @@ let gameScene = new Phaser.Class({
         const labels = [bodyA.label, bodyB.label];
         if (labels.includes('ball') && labels.includes('block')) {
           let blockBody = labels[0] === 'block' ? bodyA : bodyB;     
-          if (!blockBody || !blockBody.gameObject || blockBody.gameObject.dieing) {return}
-          blockBody.gameObject.hit();
-        }
-          
-        // PowerUp into Player collision
-        if (labels.includes('paddle') && labels.includes('powerUp')) {
-          const powerUp = labels[0] === 'powerUp' ? bodyA : bodyB;
-          powerUp.gameObject.collect();
+          let ballBody = labels[0] === 'ball' ? bodyA : bodyB;     
+          if (ballBody.fire) {
+            pair.isActive = false
+          }
+          if (!blockBody || !blockBody.gameObject || blockBody.gameObject.dieing) { return }
+          if (ballBody.fire) {
+            blockBody.gameObject.die();
+          } else {
+            blockBody.gameObject.hit();
+          }
         }
           
         // paddle
@@ -100,6 +104,7 @@ let gameScene = new Phaser.Class({
     this.lasers.children.each((laser) => laser.update());
     this.balls.children.each((ball) => ball.update());
     this.portals.children.each((portal) => portal.update());
+    this.powerUps.children.each((pu) => pu.update());
     let anyBreakableLeft = false;
     this.blocks.children.each((block) => {
       if (block.breakable) {

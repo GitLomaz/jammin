@@ -22,6 +22,21 @@ class LaserBlock extends Block {
     if (scene.ui?.updateScore) {
       scene.ui.updateScore(stats.score);
     }
+
+if (scene.gamePlay) {    
+if (Random.oneIn(20)) {
+      new PowerUp(this.x, this.y, 0) // Multiball
+    } else if (Random.oneIn(20)) {
+      new PowerUp(this.x, this.y, 1) // fire
+    } else if (Random.oneIn(20)) {
+      new PowerUp(this.x, this.y, 1) // paddle
+    } else if (Random.oneIn(100)) {
+      new PowerUp(this.x, this.y, 1) // portal
+    } else if (Random.oneIn(40)) {
+      new PowerUp(this.x, this.y, 1) // gun
+    }
+}
+
     scene.tweens.add({
       targets: this.sprite,
       scaleX: 0,

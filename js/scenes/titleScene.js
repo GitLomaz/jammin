@@ -17,6 +17,11 @@ let titleScene = new Phaser.Class({
     this.load.image('leaf1', 'images/leaf1.png');
     this.load.image('leaf2', 'images/leaf2.png');
     this.load.image('leaf3', 'images/leaf3.png');
+    this.load.image('pu_0', 'images/pu_0.png');
+    this.load.image('pu_1', 'images/pu_1.png');
+    this.load.image('pu_2', 'images/pu_2.png');
+    this.load.image('pu_3', 'images/pu_3.png');
+    this.load.image('pu_4', 'images/pu_4.png');
     this.load.image('paddleLeft', 'images/paddleLeft.png');
     this.load.image('paddleMiddle', 'images/paddleMiddle.png');
     this.load.image('paddleRight', 'images/paddleRight.png');

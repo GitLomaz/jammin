@@ -10,6 +10,8 @@ class Ball extends Entity {
     this.sprite.setCircle(this.radius);
     this.sprite.body.label = "ball";
 
+    this.sprite.body.fire = true
+
     // physics settings
     this.sprite.setBounce(1);           // full energy on bounce
     this.sprite.setFriction(0, 0, 0);   // no surface friction
