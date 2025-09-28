@@ -90,13 +90,8 @@ let gameScene = new Phaser.Class({
         // laser
         if (labels.includes('laser') && labels.includes('block')) {
           let blockBody = labels[0] === 'block' ? bodyA : bodyB;     
-          let laserBody = labels[0] === 'laser' ? bodyA : bodyB;     
           if (!blockBody || !blockBody.gameObject || blockBody.gameObject.dieing) {return}
-          if (blockBody.gameObject.breakable) {
-            blockBody.gameObject.die();
-          } else {
-            laserBody.gameObject.die();
-          }
+          blockBody.gameObject.die();
         }
           
         // paddle laser
