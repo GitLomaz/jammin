@@ -16,3 +16,5 @@ let stats = {
   lives: 3,
   currentLevel: [1, 1]
 }
+
+let unlockAll = true

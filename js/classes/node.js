@@ -22,6 +22,9 @@ class Node extends Entity {
   }
 
   setNodeType(type) {
+    if (unlockAll) {
+      type = 2
+    }
     this.type = type
     let texture;
     if (type === 0) {
