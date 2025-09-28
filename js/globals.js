@@ -7,7 +7,8 @@ const SCORE_SIDEBAR_WIDTH = 256;
 const PLAY_AREA_WIDTH = 1024;
 const PLAY_AREA_HEIGHT = 720;
 let playerName = false;
-let muteAll = false;
+let muteAll = localStorage.getItem('muteAll') === 'true' || false;
+let levelsComplete = JSON.parse(localStorage.getItem('levelsComplete')) || [];
 let music = false;
 
 let stats = {

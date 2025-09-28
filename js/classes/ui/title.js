@@ -5,33 +5,42 @@ class Title extends Phaser.GameObjects.Container {
     this.title = scene.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 4, 'Quantum Breaker', {
       fontFamily: 'font1',
       fontSize: '64px',
-      color: '#dfedef'
+      color: '#edf1f1ff'
     });
     this.title.setOrigin(0.5);
     this.add(this.title);
+
+
 
     this.highScoreObjects = [];
 
     const menuItems = [
       { text: 'START GAME', action: () => {
-        resetStats();
         scene.sounds["click"].play();
         scene.scene.stop(scene.scene.key);
-        scene.scene.start('gameScene');
+        scene.scene.start('selectScene');
         
       }},
       { text: 'HIGH SCORES', action: () => {
         this.buildHighScores();
+        scene.sounds["click"].play();
+      } },
+      { text: !muteAll ? 'SOUND ON' : 'SOUND OFF', action: () => {
+        muteAll = !muteAll;
+        game.sound.mute = muteAll;
+        this.menuOptions[2].setText(!muteAll ? 'SOUND ON' : 'SOUND OFF');
+        localStorage.setItem('muteAll', muteAll);
         scene.sounds["click"].play();
       } }
     ];
 
     this.menuOptions = [];
     menuItems.forEach((item, i) => {
-      const y = GAME_HEIGHT / 2 + i * 50;
+      const y = GAME_HEIGHT / 2 - 50 + i * 50;
       const text = scene.add.text(GAME_WIDTH / 2, y, item.text, {
         fontFamily: 'font1',
-        fontSize: '32px'
+        fontSize: '32px',
+        color: '#edf1f1ff'
       });
       text.setOrigin(0.5);
       text.setInteractive({ useHandCursor: true });
@@ -41,7 +50,7 @@ class Title extends Phaser.GameObjects.Container {
       });
       
       text.on('pointerout', () => {
-        text.setColor('#dfedef');
+        text.setColor('#edf1f1ff');
       });
       
       text.on('pointerdown', item.action);
@@ -54,24 +63,6 @@ class Title extends Phaser.GameObjects.Container {
     // this.createControlsDisplay();
     scene.add.existing(this);
     this.buildHighScores = this.buildHighScores.bind(this);
-
-    let mute = scene.add
-      .sprite(50, 650, "mute")
-      .setOrigin(0)
-      .setInteractive()
-      .setFrame(muteAll ? 1 : 0);
-
-    mute.on(
-      "pointerdown",
-      function () {
-        muteAll = !muteAll;
-        game.sound.mute = muteAll;
-        scene.sounds["click"].play();
-        mute.setFrame(muteAll ? 1 : 0);
-      },
-      this
-    );
-    this.add(mute);
   }
 
   showHighScores() {

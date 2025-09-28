@@ -38,18 +38,25 @@ function resetStats() {
   stats.currentLevel = [1, 1];
 }
 
-function generateLevel(jsonData, title = false) {
+function generateLevel(jsonData, title = false, preview = false) {
   jsonData = JSON.parse(JSON.stringify(jsonData));
   // MAP SIZE OPTIONS: 
   // X = 20 or 23 (spacing or no spacing in tiles)
   // Y = 12 or up to 17 (spacing on 12, none on others)
   for (let i = 0; i < jsonData.height; i++) {
     for (let j = 0; j < jsonData.width; j++) {
-      const xSpacing = jsonData.width === 20? 60 : 53;
-      const ySpacing = jsonData.height === 12? 40 : 30;
-      const xMargin = jsonData.width === 20? 69 : 56;
-      const yMargin = title ? 60 : 130;
+      let xSpacing = jsonData.width === 20 ? 60 : 53;
+      let ySpacing = jsonData.height === 12 ? 40 : 30;
+      let xMargin = jsonData.width === 20 ? 69 : 56;
+      let yMargin = title ? 60 : 130;
       let block = jsonData.layers[0].data.shift();
+      let newBlock = null
+      if (preview) {
+        xSpacing = xSpacing / 2
+        ySpacing = ySpacing / 2
+        xMargin = jsonData.width === 20 ? 104 : 97;
+        yMargin = 160
+      }
       switch (block) {
         case 0:
           continue;
@@ -60,25 +67,28 @@ function generateLevel(jsonData, title = false) {
         case 9:
         case 10:
         case 11:
-          new StandardBlock(xMargin + j * xSpacing, yMargin + i * ySpacing, block - 1);
+          newBlock = new StandardBlock(xMargin + j * xSpacing, yMargin + i * ySpacing, block - 1);
           break;
         case 5:
         case 6:
         case 7:
-          new CrumbleBlock(xMargin + j * xSpacing, yMargin + i * ySpacing, block - 4);
+          newBlock = new CrumbleBlock(xMargin + j * xSpacing, yMargin + i * ySpacing, block - 4);
           break;
         case 8:
-          new IronBlock(xMargin + j * xSpacing, yMargin + i * ySpacing);
+          newBlock = new IronBlock(xMargin + j * xSpacing, yMargin + i * ySpacing);
           break;
         case 12:
-          new BombBlock(xMargin + j * xSpacing, yMargin + i * ySpacing);
+          newBlock = new BombBlock(xMargin + j * xSpacing, yMargin + i * ySpacing);
           break;
         case 13:
-          new LaserBlock(xMargin + j * xSpacing, yMargin + i * ySpacing, true);
+          newBlock = new LaserBlock(xMargin + j * xSpacing, yMargin + i * ySpacing, true);
           break;
         case 14:
-          new LaserBlock(xMargin + j * xSpacing, yMargin + i * ySpacing, false);
+          newBlock = new LaserBlock(xMargin + j * xSpacing, yMargin + i * ySpacing, false);
           break;
+      }
+      if (preview) {
+        newBlock.sprite.setScale(.5)
       }
     }
   }

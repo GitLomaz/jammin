@@ -3,7 +3,7 @@ let config = {
   width: GAME_WIDTH,
   height: GAME_HEIGHT,
   parent: "wrapper",
-  scene: [titleScene, gameScene],
+  scene: [titleScene, gameScene, selectScene],
     physics: {
       default: 'matter',
       matter: {
