@@ -38,7 +38,7 @@ class Paddle extends Entity {
     scene.matter.add.gameObject(this, this.body);
     scene.add.existing(this);
 
-    const MAX_SPEED = 15;
+    const MAX_SPEED = 12;
 
     if (!demoMode) {
       // Keyboard setup
