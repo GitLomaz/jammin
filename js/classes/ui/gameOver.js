@@ -63,7 +63,9 @@ class GameOver extends Phaser.GameObjects.Container {
       })
       .on('pointerdown', () => {
         resetStats();
-        scene.scene.restart();
+        scene.sounds["click"].play();
+        scene.scene.stop(scene.scene.key);
+        scene.scene.start('selectScene');
       })
       .setAlpha(0);
     this.add(this.playAgain);
