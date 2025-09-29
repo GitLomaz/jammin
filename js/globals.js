@@ -17,4 +17,4 @@ let stats = {
   currentLevel: [1, 1]
 }
 
-let unlockAll = true
+let unlockAll = false
