@@ -52,12 +52,14 @@ let titleScene = new Phaser.Class({
     this.load.audio("brickMetal", "audio/brick_metal.mp3");
     this.load.audio("brickMeteor", "audio/brick_meteor.mp3");
     this.load.audio("brickNormal", "audio/brick_normal.mp3");
+    this.load.audio("explosion", "audio/explosion.mp3");
     this.load.audio("levelClear", "audio/level_clear.mp3");
     this.load.audio("music", "audio/music.mp3");
     this.load.audio("puFire", "audio/pu_fire.mp3");
     this.load.audio("puLaser", "audio/pu_laser.mp3");
     this.load.audio("puPaddle", "audio/pu_paddle.mp3");
     this.load.audio("puPortal", "audio/pu_portal.mp3");
+    this.load.audio("puLife", "audio/pu_life.mp3");
   },
 
   

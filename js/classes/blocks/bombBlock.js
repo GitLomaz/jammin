@@ -20,6 +20,7 @@ class BombBlock extends Block {
     super.die()
     const sourceBlock = this
     if (this.armed) {
+      scene.sounds["explosion"].play();
       this.armed = false;
       const circle = scene.add.circle(
         this.sprite.body.position.x,

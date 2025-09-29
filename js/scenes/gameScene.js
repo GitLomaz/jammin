@@ -29,6 +29,7 @@ let gameScene = new Phaser.Class({
     this.sounds["brickMetal"] = this.sound.add("brickMetal");
     this.sounds["brickMeteor"] = this.sound.add("brickMeteor");
     this.sounds["brickNormal"] = this.sound.add("brickNormal");
+    this.sounds["explosion"] = this.sound.add("explosion");
     this.sounds["levelClear"] = this.sound.add("levelClear");
     this.sounds["puFire"] = this.sound.add("puFire");
     this.sounds["puLaser"] = this.sound.add("puLaser");

@@ -16,6 +16,7 @@ class StandardBlock extends Block {
   }
 
   hit() {
+    scene.sounds["brickNormal"].play();
     this.die();
   }
 }
