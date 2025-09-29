@@ -145,11 +145,12 @@ let gameScene = new Phaser.Class({
 
 function generatePortals() {
   if (scene.portals.children.size === 0) {
-    let levelsComplete = JSON.parse(localStorage.getItem('levelsComplete')) || [];
-    if (!levelsComplete.some(level => level[0] === stats.currentLevel[0] && level[1] === stats.currentLevel[1])) {
-      levelsComplete.push([stats.currentLevel[0], stats.currentLevel[1]]);
-      localStorage.setItem('levelsComplete', JSON.stringify(levelsComplete));
-    }
+    levelsComplete = JSON.parse(localStorage.getItem('levelsComplete')) || [];
+    levelsComplete.push([stats.currentLevel[0], stats.currentLevel[1]]);
+    levelsComplete = levelsComplete.filter((level, index, self) => 
+      index === self.findIndex(l => l[0] === level[0] && l[1] === level[1])
+    );
+    localStorage.setItem('levelsComplete', JSON.stringify(levelsComplete));
     if (![[7,1],[8,1],[9,1],[10,1],[11,1],[12,1]].some(arr => arr[0] === stats.currentLevel[0] && arr[1] === stats.currentLevel[1])) {
       new Portal(15, GAME_HEIGHT - 42);
     }
