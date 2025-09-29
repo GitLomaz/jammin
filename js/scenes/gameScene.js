@@ -46,7 +46,6 @@ let gameScene = new Phaser.Class({
     this.puPaddleBar = false
 
     this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'bg').setAlpha(0.6);
-    console.log(this.bg)
     this.ui = new Game();
     this.bg = this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'gameFrame');
 
