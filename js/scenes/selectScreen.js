@@ -70,7 +70,7 @@ let selectScene = new Phaser.Class({
 
     scene = this;
     this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'bg').setAlpha(0.6);
-    this.title = scene.add.text(GAME_WIDTH / 2 - 150, GAME_HEIGHT / 4 - 100, 'Sector Selection', {
+    this.title = scene.add.text(GAME_WIDTH / 2, GAME_HEIGHT / 4 - 100, 'Sector Selection', {
       fontFamily: 'font1',
       fontSize: '64px',
       color: '#edf1f1ff'
@@ -90,7 +90,7 @@ let selectScene = new Phaser.Class({
     });
 
     
-    this.launchButton = scene.add.image(GAME_WIDTH / 2 - 55, 580, "launchButton").setInteractive({ useHandCursor: true });
+    this.launchButton = scene.add.image(GAME_WIDTH / 2, 580, "launchButton").setInteractive({ useHandCursor: true });
 
     this.launchButton.on('pointerdown', () => {
       resetStats();
@@ -100,11 +100,13 @@ let selectScene = new Phaser.Class({
       scene.scene.start('gameScene');
     });
 
-    this.launch = scene.add.text(GAME_WIDTH / 2 - 150, 550, 'Launch!', {
+    this.launch = scene.add.text(GAME_WIDTH / 2, 550, 'Launch!', {
       fontFamily: 'font1',
       fontSize: '48px',
       color: '#edf1f1ff'
     });
+
+    this.launch.setOrigin(.5, 0)
     
     this.launchButton.on('pointerover', () => {
       this.launch.setColor('#167d52');
