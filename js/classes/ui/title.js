@@ -10,7 +10,7 @@ class Title extends Phaser.GameObjects.Container {
     this.title.setOrigin(0.5);
     this.add(this.title);
 
-    this.version = scene.add.text(GAME_WIDTH - 50, GAME_HEIGHT - 10, 'V1.0', {
+    this.version = scene.add.text(GAME_WIDTH - 50, GAME_HEIGHT - 10, 'V1.1', {
       fontFamily: 'font1',
       fontSize: '16px',
       color: '#edf1f1ff'
