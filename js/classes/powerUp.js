@@ -17,7 +17,7 @@ class PowerUp extends Entity {
     });
     this.sprite.setIgnoreGravity(true);
     this.sprite.setFrictionAir(0);
-    this.sprite.setVelocity(0, 3);
+    this.sprite.setVelocity(0, 2.5);
 
     this.add(this.sprite);
     scene.powerUps.add(this);

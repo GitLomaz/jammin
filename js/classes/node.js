@@ -63,9 +63,11 @@ class Node extends Entity {
     if (this.type === 0) {
       scene.questionMark.setAlpha(1)
       scene.launch.setVisible(false)
+      scene.launchButton.setVisible(false)
     } else {
       scene.questionMark.setAlpha(0)
       scene.launch.setVisible(true)
+      scene.launchButton.setVisible(true)
       generateLevel(this.jsonData, false, true)
     }
     const radius = this.sprite.displayWidth / 2 + 4;

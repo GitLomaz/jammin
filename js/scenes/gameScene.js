@@ -45,8 +45,9 @@ let gameScene = new Phaser.Class({
     this.puPaddleBar = false
 
     this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'bg').setAlpha(0.6);
+    console.log(this.bg)
     this.ui = new Game();
-    this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'gameFrame');
+    this.bg = this.add.image(GAME_WIDTH / 2, GAME_HEIGHT / 2, 'gameFrame');
 
     generateLevel(jsonData);
 
@@ -149,7 +150,12 @@ function generatePortals() {
       levelsComplete.push([stats.currentLevel[0], stats.currentLevel[1]]);
       localStorage.setItem('levelsComplete', JSON.stringify(levelsComplete));
     }
-    new Portal(15, GAME_HEIGHT - 42);
-    new Portal(GAME_WIDTH - 15, GAME_HEIGHT - 42);
+    if (![[7,1],[8,1],[9,1],[10,1],[11,1],[12,1]].some(arr => arr[0] === stats.currentLevel[0] && arr[1] === stats.currentLevel[1])) {
+      new Portal(15, GAME_HEIGHT - 42);
+    }
+    if (![[7,7],[8,6],[9,5],[10,4],[11,3],[12,2]].some(arr => arr[0] === stats.currentLevel[0] && arr[1] === stats.currentLevel[1])) {
+      new Portal(GAME_WIDTH - 15, GAME_HEIGHT - 42, false);
+    }
+    scene.bg.setTexture('gameFramePortals')
   }
 }

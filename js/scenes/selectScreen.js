@@ -33,6 +33,7 @@ let selectScene = new Phaser.Class({
     this.load.image('bg', 'images/bg.png');
     this.load.image("ball", "images/ball.png");
     this.load.image("greenBall", "images/greenBall.png");
+    this.load.image("launchButton", "images/launchButton.png");
     this.load.image("hotBall", "images/hotBall.png");
     this.load.spritesheet('blocks', 'images/blocks.png', { frameWidth: 53, frameHeight: 30 });
 
@@ -88,29 +89,31 @@ let selectScene = new Phaser.Class({
       color: '#edf1f1ff'
     });
 
-    this.launch = scene.add.text(GAME_WIDTH / 2 - 150, 550, 'Launch!', {
-      fontFamily: 'font1',
-      fontSize: '48px',
-      color: '#edf1f1ff'
-    });
+    
+    this.launchButton = scene.add.image(GAME_WIDTH / 2 - 55, 580, "launchButton").setInteractive({ useHandCursor: true });
 
-    this.launch.setInteractive({ useHandCursor: true });
-    
-    this.launch.on('pointerover', () => {
-      this.launch.setColor('#167d52');
-    });
-    
-    this.launch.on('pointerout', () => {
-      this.launch.setColor('#edf1f1ff');
-    });
-    
-    this.launch.on('pointerdown', () => {
+    this.launchButton.on('pointerdown', () => {
       resetStats();
       stats.currentLevel = this.selectedLevel
       scene.sounds["click"].play();
       scene.scene.stop(scene.scene.key);
       scene.scene.start('gameScene');
     });
+
+    this.launch = scene.add.text(GAME_WIDTH / 2 - 150, 550, 'Launch!', {
+      fontFamily: 'font1',
+      fontSize: '48px',
+      color: '#edf1f1ff'
+    });
+    
+    this.launchButton.on('pointerover', () => {
+      this.launch.setColor('#167d52');
+    });
+    
+    this.launchButton.on('pointerout', () => {
+      this.launch.setColor('#edf1f1ff');
+    });
+    
 
     this.back = scene.add.text(GAME_WIDTH - 80, 10, 'Back', {
       fontFamily: 'font1',

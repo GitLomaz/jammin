@@ -32,13 +32,15 @@ let titleScene = new Phaser.Class({
     this.load.image('iron', 'images/iron.png');
     this.load.image('ironLeft', 'images/ironLeft.png');
     this.load.image('ironRight', 'images/ironRight.png');
-    this.load.image('portal', 'images/portal.png');
+    this.load.image('portalLeft', 'images/portalLeft.png');
+    this.load.image('portalRight', 'images/portalRight.png');
     this.load.image('bg', 'images/bg.png');
     this.load.image('laser', 'images/laser.png');
     this.load.image('life', 'images/life.png');
     this.load.image('border', 'images/border.png');
     this.load.image('titleFrame', 'images/titleFrame.png');
     this.load.image('gameFrame', 'images/gameFrame.png');
+    this.load.image('gameFramePortals', 'images/gameFramePortals.png');
     this.load.spritesheet('blocks', 'images/blocks.png', { frameWidth: 53, frameHeight: 30 });
     this.load.spritesheet("mute", "images/mute.png", { frameWidth: 32, frameHeight: 32 });
     this.load.json('titleJson', 'js/data/title.json');

@@ -1,11 +1,7 @@
-class Portal extends Phaser.GameObjects.TileSprite {
-  constructor(x, y) {
-    super(scene, x, y, 30, 85, 'portal');
+class Portal extends Phaser.GameObjects.Image {
+  constructor(x, y, left = true) {
+    super(scene, x, y, left ? 'portalLeft' : 'portalRight');
     scene.portals.add(this);
     scene.add.existing(this);
-  }
-
-  update() {
-    this.tilePositionY -= 1;
   }
 }

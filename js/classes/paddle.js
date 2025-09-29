@@ -106,14 +106,31 @@ class Paddle extends Entity {
   checkPortals() {
     if (scene.portals.getChildren().length === 0) return;
 
-    if (this.body.bounds.min.x < this.PADDLE_MARGIN) {
-      stats.currentLevel[0]++;
-      scene.scene.restart();
-    } else if (this.body.bounds.max.x > GAME_WIDTH - this.PADDLE_MARGIN) {
-      stats.currentLevel[0]++;
-      stats.currentLevel[1]++;
-      scene.scene.restart();
+    if (stats.currentLevel[0] === 13) {
+      if (this.body.bounds.min.x < this.PADDLE_MARGIN) {
+        stats.currentLevel = [1,1]
+        scene.scene.restart();
+      } 
+    } else if (stats.currentLevel[0] < 7) {
+      if (this.body.bounds.min.x < this.PADDLE_MARGIN) {
+        stats.currentLevel[0]++;
+        scene.scene.restart();
+      } else if (this.body.bounds.max.x > GAME_WIDTH - this.PADDLE_MARGIN) {
+        stats.currentLevel[0]++;
+        stats.currentLevel[1]++;
+        scene.scene.restart();
+      } 
+    } else {
+      if (this.body.bounds.min.x < this.PADDLE_MARGIN) {
+        stats.currentLevel[0]++;
+        stats.currentLevel[1]--;
+        scene.scene.restart();
+      } else if (this.body.bounds.max.x > GAME_WIDTH - this.PADDLE_MARGIN) {
+        stats.currentLevel[0]++;
+        scene.scene.restart();
+      } 
     }
+
   }
 
   update() {
