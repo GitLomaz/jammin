@@ -122,12 +122,18 @@ class Paddle extends Entity {
       } 
     } else {
       if (this.body.bounds.min.x < this.PADDLE_MARGIN) {
-        stats.currentLevel[0]++;
-        stats.currentLevel[1]--;
-        scene.scene.restart();
+        if (![[7,1],[8,1],[9,1],[10,1],[11,1],[12,1]].some(arr => arr[0] === stats.currentLevel[0] && arr[1] === stats.currentLevel[1])) {
+          stats.currentLevel[0]++;
+          stats.currentLevel[1]--;
+          scene.scene.restart();
+        }
       } else if (this.body.bounds.max.x > GAME_WIDTH - this.PADDLE_MARGIN) {
-        stats.currentLevel[0]++;
-        scene.scene.restart();
+        if (![[7,7],[8,6],[9,5],[10,4],[11,3],[12,2]].some(arr => arr[0] === stats.currentLevel[0] && arr[1] === stats.currentLevel[1])) {
+          console.log(stats.currentLevel)
+          console.log('here?!')
+          stats.currentLevel[0]++;
+          scene.scene.restart();
+        }
       } 
     }
 
