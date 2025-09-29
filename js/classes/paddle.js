@@ -107,7 +107,7 @@ class Paddle extends Entity {
     if (scene.portals.getChildren().length === 0) return;
 
     if (stats.currentLevel[0] === 13) {
-      if (this.body.bounds.min.x < this.PADDLE_MARGIN) {
+      if (this.body.bounds.min.x < this.PADDLE_MARGIN || this.body.bounds.max.x > GAME_WIDTH - this.PADDLE_MARGIN) {
         stats.currentLevel = [1,1]
         scene.scene.restart();
       } 
