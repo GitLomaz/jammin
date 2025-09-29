@@ -136,6 +136,30 @@ let selectScene = new Phaser.Class({
       scene.scene.stop(scene.scene.key);
       scene.scene.start('titleScene');
     });
+    
+
+    this.reset = scene.add.text(12, GAME_HEIGHT - 40, 'Reset Progress', {
+      fontFamily: 'font1',
+      fontSize: '24px',
+      color: '#edf1f1ff'
+    });
+
+    this.reset.setInteractive({ useHandCursor: true });
+    
+    this.reset.on('pointerover', () => {
+      this.reset.setColor('#167d52');
+    });
+    
+    this.reset.on('pointerout', () => {
+      this.reset.setColor('#edf1f1ff');
+    });
+    
+    this.reset.on('pointerdown', () => {
+      scene.sounds["click"].play();
+      localStorage.setItem('levelsComplete', JSON.stringify([]));
+      levelsComplete = []
+      scene.scene.restart();
+    });
 
     this.blocks = this.add.group();
 

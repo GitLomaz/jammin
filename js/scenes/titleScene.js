@@ -119,6 +119,7 @@ let titleScene = new Phaser.Class({
     if (this.submitScore) {
       this.ui.buildHighScores(this.submitScore);
     }
+    game.sound.mute = muteAll;
   },  
 
   update: function (time) {
