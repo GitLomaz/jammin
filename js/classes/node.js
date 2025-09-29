@@ -28,7 +28,7 @@ class Node extends Entity {
     this.type = type
     let texture;
     if (type === 0) {
-      texture = "ball";
+      texture = "greyBall";
     } else if (type === 1) {
       texture = "hotBall";
     } else if (type === 2) {

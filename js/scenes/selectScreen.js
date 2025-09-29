@@ -31,7 +31,7 @@ let selectScene = new Phaser.Class({
     });
 
     this.load.image('bg', 'images/bg.png');
-    this.load.image("ball", "images/ball.png");
+    this.load.image("greyBall", "images/ballGrey.png");
     this.load.image("greenBall", "images/greenBall.png");
     this.load.image("launchButton", "images/launchButton.png");
     this.load.image("hotBall", "images/hotBall.png");
@@ -188,7 +188,7 @@ let selectScene = new Phaser.Class({
       for (let i = 0; i < count; i++) {
         const x = offsetX + i * spacingX;
         const nodeLabel = `${rowIndex + 1},${i + 1}`;
-        const texture = completedSet.has(nodeLabel) ? "greenBall" : "ball";
+        const texture = completedSet.has(nodeLabel) ? "greenBall" : "greyBall";
         node = new Node(x, y, completedSet.has(nodeLabel) ? 2 : 0, { row: rowIndex + 1, col: i + 1 }, this.cache.json.get('level' + (rowIndex + 1) + '_' + (i + 1)))
         scene.allNodes.push(node);
         row.push(node);
