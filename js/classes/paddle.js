@@ -129,8 +129,6 @@ class Paddle extends Entity {
         }
       } else if (this.body.bounds.max.x > GAME_WIDTH - this.PADDLE_MARGIN) {
         if (![[7,7],[8,6],[9,5],[10,4],[11,3],[12,2]].some(arr => arr[0] === stats.currentLevel[0] && arr[1] === stats.currentLevel[1])) {
-          console.log(stats.currentLevel)
-          console.log('here?!')
           stats.currentLevel[0]++;
           scene.scene.restart();
         }
