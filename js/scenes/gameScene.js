@@ -151,12 +151,33 @@ function generatePortals() {
       index === self.findIndex(l => l[0] === level[0] && l[1] === level[1])
     );
     localStorage.setItem('levelsComplete', JSON.stringify(levelsComplete));
+    scene.bg.setTexture('gameFramePortals')
     if (![[7,1],[8,1],[9,1],[10,1],[11,1],[12,1]].some(arr => arr[0] === stats.currentLevel[0] && arr[1] === stats.currentLevel[1])) {
       new Portal(15, GAME_HEIGHT - 42);
+    } else {
+      scene.bg.setTexture('gameFramePortalRight')
     }
     if (![[7,7],[8,6],[9,5],[10,4],[11,3],[12,2]].some(arr => arr[0] === stats.currentLevel[0] && arr[1] === stats.currentLevel[1])) {
       new Portal(GAME_WIDTH - 15, GAME_HEIGHT - 42, false);
+    } else {
+      scene.bg.setTexture('gameFramePortalLeft')
     }
-    scene.bg.setTexture('gameFramePortals')
+    if (1 === stats.currentLevel[0] && 1 === stats.currentLevel[1]) {
+      console.log('FIRST ZONE')
+      let text = scene.add.text(GAME_WIDTH / 2, GAME_HEIGHT - 50, '<< NEXT SECTOR                                                                                                                                                                     NEXT SECTOR >>', {
+        fontFamily: 'font1',
+        fontSize: '24px',
+        color: '#edf1f1ff'
+      }).setOrigin(.5);
+
+      scene.tweens.add({
+        targets: text,
+        alpha: 0.2,
+        duration: 1000,
+        ease: 'Linear',
+        yoyo: true,
+        repeat: -1
+      });
+    }
   }
 }

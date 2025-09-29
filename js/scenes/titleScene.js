@@ -41,6 +41,8 @@ let titleScene = new Phaser.Class({
     this.load.image('titleFrame', 'images/titleFrame.png');
     this.load.image('gameFrame', 'images/gameFrame.png');
     this.load.image('gameFramePortals', 'images/gameFramePortals.png');
+    this.load.image('gameFramePortalLeft', 'images/gameFramePortalLeft.png');
+    this.load.image('gameFramePortalRight', 'images/gameFramePortalRight.png');
     this.load.spritesheet('blocks', 'images/blocks.png', { frameWidth: 53, frameHeight: 30 });
     this.load.spritesheet("mute", "images/mute.png", { frameWidth: 32, frameHeight: 32 });
     this.load.json('titleJson', 'js/data/title.json');
